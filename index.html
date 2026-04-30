@@ -256,20 +256,13 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: all 0.2s;
-    text-decoration: none !important;
-    cursor: pointer !important;
-    pointer-events: all !important;
+    transition: border-color 0.2s, background 0.2s;
     color: inherit;
-    -webkit-tap-highlight-color: rgba(237,184,48,0.2);
-    touch-action: manipulation;
   }
 
   .ep-card:hover {
     border-color: var(--accent);
-    background: #222222;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(230,50,35,0.15);
+    background: #1f1f1f;
   }
 
   .ep-num {
@@ -323,14 +316,29 @@
     white-space: nowrap;
   }
 
+  .ep-listen-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
   .ep-listen {
     font-size: 0.72rem;
     font-weight: 600;
-    color: var(--accent-2);
     white-space: nowrap;
     flex-shrink: 0;
     letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: opacity 0.15s, color 0.15s;
   }
+
+  .ep-listen:hover {
+    opacity: 0.78;
+  }
+
+  .ep-listen-carolla { color: var(--accent); }
+  .ep-listen-apple   { color: var(--accent-2); }
 
   /* Typing indicator */
   .typing {
@@ -583,11 +591,14 @@
       font-size: 0.6rem;
       padding: 2px 7px;
     }
-    .ep-listen {
-      font-size: 0.72rem;
+    .ep-listen-group {
       padding-top: 7px;
       border-top: 1px solid #2a2a2a;
       margin-top: 1px;
+      gap: 6px;
+    }
+    .ep-listen {
+      font-size: 0.72rem;
     }
 
     /* Input area — stays anchored, keyboard-friendly */
@@ -816,7 +827,7 @@
     </div>
   </a>
   <div class="header-right">
-    <div class="ep-count"><strong>4,000+</strong> episodes · Daily since 2009</div>
+    <div class="ep-count"><strong>6,000+</strong> episodes · Daily since 2009</div>
     <div class="status-dot"><div class="dot"></div>Live</div>
     <button class="clear-btn" onclick="clearConversation()">New chat</button>
     <span class="key-badge" onclick="resetKey()" title="Change API key">🔑 Key set</span>
@@ -951,6 +962,28 @@ The catalog window provided to you on each turn is the source of episode-specifi
 // when a deal closes with PodcastOne, the deep-link mapping becomes a deal term.
 
 const SHOW_URL = "https://podcasts.apple.com/us/podcast/adam-carolla-show/id306390087";
+const ADAMCAROLLA_BASE = "https://adamcarolla.com/podcast-episode/";
+
+// Build adamcarolla.com episode URL from title.
+// Pattern observed: lowercase, strip apostrophes (incl. curly), non-alphanumeric → hyphen,
+// collapse runs of hyphens, trim. Matches the example slug exactly:
+//   "Live from Belly Up, Solana Beach with Jonathan Kite"
+//     → "live-from-belly-up-solana-beach-with-jonathan-kite"
+function adamCarollaUrl(title) {
+  const slug = title
+    .toLowerCase()
+    .replace(/[\u2018\u2019\u201A\u201B'`]/g, '')  // strip apostrophes (straight + curly)
+    .replace(/[^a-z0-9]+/g, '-')                    // non-alphanumeric → hyphen
+    .replace(/^-+|-+$/g, '');                       // trim
+  return ADAMCAROLLA_BASE + slug + '/';
+}
+
+// Mobile detection — used to suppress auto-focus behavior that would
+// trigger the on-screen keyboard and crush vertical space.
+function isMobile() {
+  return ('ontouchstart' in window) ||
+    (window.matchMedia && window.matchMedia('(max-width: 640px)').matches);
+}
 
 const EPISODE_DATA = {
   1:{t:"LA Mayoral Candidate Tish Hyman is Fighting for REAL WOMEN + James Comey INDICTED!",d:"Apr 30, 2026",iso:"2026-04-30",type:"Daily"},
@@ -7126,7 +7159,7 @@ function buildCatalogBlock(latestUserMessage) {
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.0.4';
+const APP_VERSION = '1.0.5';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
@@ -7162,7 +7195,7 @@ function submitKey() {
   errEl.style.display = 'none';
   document.getElementById('keyGate').style.display = 'none';
   document.querySelector('.key-badge').style.display = 'inline-flex';
-  inputEl.focus();
+  if (!isMobile()) inputEl.focus();
 }
 
 function resetKey() {
@@ -7211,7 +7244,7 @@ SUGGESTIONS.forEach(s => {
 
 // ─── GREETING ─────────────────────────────────────────────────────────────────
 setTimeout(() => {
-  const greeting = `Welcome. I'm the catalog concierge for The Adam Carolla Show — 4,000+ episodes deep and counting, and your job here is to spend as little time with me as possible before you find an episode worth pressing play on.\n\nTell me what you're in the mood for. New to the show and need a starting point? Long drive ahead and want something you can sink into? Looking for a specific guest, or a vintage Classic from the early days? Want comedy without the news segment today?\n\nThe more you tell me about what you actually want, the faster I get you to the right episode. Pick a starter below or just type whatever comes to mind.`;
+  const greeting = `Welcome. I'm the catalog concierge for The Adam Carolla Show — 6,000+ episodes deep and counting, and your job here is to spend as little time with me as possible before you find an episode worth pressing play on.\n\nTell me what you're in the mood for. New to the show and need a starting point? Long drive ahead and want something you can sink into? Looking for a specific guest, or a vintage Classic from the early days? Want comedy without the news segment today?\n\nThe more you tell me about what you actually want, the faster I get you to the right episode. Pick a starter below or just type whatever comes to mind.`;
   addMessage('agent', greeting);
   conversation.push({ role: 'assistant', content: greeting });
 }, 350);
@@ -7285,17 +7318,17 @@ function addMessage(role, text) {
       epRefs.forEach(num => {
         const ep = EPISODE_DATA[num];
         if (!ep) return;
-        const card = document.createElement('a');
+        const card = document.createElement('div');
         card.className = 'ep-card';
-        card.href = SHOW_URL;
-        card.target = '_blank';
-        card.rel = 'noopener noreferrer';
         card.innerHTML = `
           <div class="ep-num" style="text-transform:uppercase;font-size:0.65rem;">${ep.type}</div>
           <div class="ep-info">
             <div class="ep-title">${ep.t}</div>
             <div class="ep-tags"><span class="ep-tag">${ep.d}</span></div>
-            <div class="ep-listen">Listen on Apple Podcasts →</div>
+            <div class="ep-listen-group">
+              <a class="ep-listen ep-listen-carolla" href="${adamCarollaUrl(ep.t)}" target="_blank" rel="noopener noreferrer">Listen on AdamCarolla.com →</a>
+              <a class="ep-listen ep-listen-apple" href="${SHOW_URL}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts →</a>
+            </div>
           </div>`;
         cardsDiv.appendChild(card);
       });
@@ -7337,7 +7370,7 @@ function clearConversation() {
   suggestionsEl.style.display = 'flex';
   errorNote.style.display = 'none';
   setTimeout(() => {
-    const greeting = `Welcome. I'm the catalog concierge for The Adam Carolla Show — 4,000+ episodes deep and counting, and your job here is to spend as little time with me as possible before you find an episode worth pressing play on.\n\nTell me what you're in the mood for. New to the show and need a starting point? Long drive ahead and want something you can sink into? Looking for a specific guest, or a vintage Classic from the early days? Want comedy without the news segment today?\n\nThe more you tell me about what you actually want, the faster I get you to the right episode. Pick a starter below or just type whatever comes to mind.`;
+    const greeting = `Welcome. I'm the catalog concierge for The Adam Carolla Show — 6,000+ episodes deep and counting, and your job here is to spend as little time with me as possible before you find an episode worth pressing play on.\n\nTell me what you're in the mood for. New to the show and need a starting point? Long drive ahead and want something you can sink into? Looking for a specific guest, or a vintage Classic from the early days? Want comedy without the news segment today?\n\nThe more you tell me about what you actually want, the faster I get you to the right episode. Pick a starter below or just type whatever comes to mind.`;
     addMessage('agent', greeting);
     conversation.push({ role: 'assistant', content: greeting });
   }, 200);
@@ -7398,9 +7431,7 @@ async function sendMessage() {
   }
 
   isLoading = false;
-  // Only auto-focus on desktop — on mobile this triggers the keyboard
-  // which covers the response the user just received
-  if (!('ontouchstart' in window)) {
+  if (!isMobile()) {
     inputEl.focus();
   }
 }
