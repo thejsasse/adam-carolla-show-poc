@@ -6,7 +6,7 @@ on:
     - cron: '0 * * * *'
 
 permissions:
-  contents: write  # Crucial fix for Exit Code 128
+  contents: write
 
 jobs:
   build-database:
@@ -17,10 +17,7 @@ jobs:
 
       - name: Fetch and Process Podcast Data
         run: |
-          # Fetch the full RSS feed
           curl -L -sS 'https://rss.art19.com/adam-carolla-show' -o carolla_rss.xml
-          
-          # Create the slim index file for Claude
           grep -E '<title>|<pubDate>' carolla_rss.xml > carolla_index.txt
 
       - name: Commit and Push to Repository
@@ -28,5 +25,11 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add carolla_rss.xml carolla_index.txt
-          git commit -m "Database Sync: $(date +'%Y-%m-%d %H:%M')" || echo "No changes detected"
-          git push
+          
+          # This check prevents "Exit Code 1" if the files haven't changed
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Database Sync: $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi
