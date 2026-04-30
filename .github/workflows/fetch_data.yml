@@ -1,0 +1,27 @@
+name: Archive Podcast RSS
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' # Still running every hour to catch new drops
+
+jobs:
+  fetch-rss:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Latest RSS
+        run: |
+          # Downloads the actual RSS feed file
+          curl -L -sS 'https://rss.art19.com/adam-carolla-show' -o carolla_rss.xml
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add carolla_rss.xml
+          # Only commits if the feed has actually changed (e.g., a new episode was added)
+          git commit -m "Update RSS archive" || echo "No changes to the feed"
+          git push
