@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+<title>Adam Carolla Show — Catalog Concierge</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #000000;
+    --bg2: #000000;
+    --bg3: #161616;
+    --border: #2a2a2a;
+    --accent: #e63223;
+    --accent-2: #2589e6;
+    --accent-dim: rgba(230,50,35,0.15);
+    --accent-glow: rgba(230,50,35,0.3);
+    --text: #ffffff;
+    --text-dim: #d4d4d4;
+    --text-muted: #888888;
+    --user-bubble: #2589e6;
+    --agent-bubble: #161616;
+    --tag-bg: rgba(230,50,35,0.12);
+    --tag-border: rgba(230,50,35,0.45);
+  }
+
+  html, body { height: 100%; overflow: hidden; max-width: 100%; }
+  * { max-width: 100%; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: var(--bg2);
+    border-bottom: 3px solid var(--accent);
+    flex-shrink: 0;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: opacity 0.15s;
+  }
+
+  .header-left:hover {
+    opacity: 0.85;
+  }
+
+  .logo-mark {
+    width: 42px;
+    height: 42px;
+    background: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg { width: 24px; height: 24px; }
+
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  .header-sub {
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 1px;
+    font-weight: 600;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ep-count {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ep-count strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .status-dot {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4caf72;
+    box-shadow: 0 0 6px #4caf7280;
+    animation: pulse-dot 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+  /* MESSAGES */
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #messages::-webkit-scrollbar { width: 5px; }
+  #messages::-webkit-scrollbar-track { background: transparent; }
+  #messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .msg-row {
+    display: flex;
+    gap: 14px;
+    animation: msg-in 0.3s ease-out both;
+    max-width: 860px;
+    width: 100%;
+    align-self: center;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  @keyframes msg-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-row.user {
+    flex-direction: row-reverse;
+    align-self: center;
+    max-width: 860px;
+    width: 100%;
+    justify-content: flex-start;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .msg-row.user .bubble {
+    max-width: 580px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .avatar.agent {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: none;
+  }
+
+  .avatar.user {
+    background: var(--user-bubble);
+    color: #ffffff;
+    border: 1px solid #1873cc;
+  }
+
+  .bubble {
+    padding: 16px 20px;
+    border-radius: 16px;
+    line-height: 1.7;
+    font-size: 0.92rem;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  .bubble.agent {
+    background: var(--agent-bubble);
+    border: 1px solid #2a2a2a;
+    border-top-left-radius: 4px;
+    color: #f5f5f5;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+
+  .bubble.user {
+    background: var(--user-bubble);
+    border: 1px solid #1873cc;
+    border-top-right-radius: 4px;
+    color: #ffffff;
+  }
+
+  .bubble p { margin-bottom: 0.8em; }
+  .bubble p:last-child { margin-bottom: 0; }
+  .bubble strong { color: var(--accent-2); font-weight: 600; }
+  .bubble em { color: #5a7a9a; font-style: italic; }
+
+  /* Episode cards */
+  .ep-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+    pointer-events: all;
+  }
+
+  .ep-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    pointer-events: all !important;
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(237,184,48,0.2);
+    touch-action: manipulation;
+  }
+
+  .ep-card:hover {
+    border-color: var(--accent);
+    background: #222222;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(230,50,35,0.15);
+  }
+
+  .ep-num {
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.03em;
+    align-self: center;
+  }
+
+  .ep-info {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ep-title {
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .ep-tags {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ep-tag {
+    font-size: 0.63rem;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #aaa;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  .ep-listen {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-2);
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* Typing indicator */
+  .typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 14px 18px;
+    background: var(--agent-bubble);
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    border-top-left-radius: 4px;
+    width: fit-content;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* INPUT AREA */
+  .input-area {
+    padding: 18px 24px 20px;
+    background: #000000;
+    border-top: 3px solid var(--accent);
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .input-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: #161616;
+    border: 2px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 12px 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    resize: none;
+    min-height: 24px;
+    max-height: 140px;
+    overflow-y: auto;
+  }
+
+  textarea::placeholder { color: var(--text-muted); }
+
+  textarea::-webkit-scrollbar { width: 3px; }
+  textarea::-webkit-scrollbar-thumb { background: var(--border); }
+
+  .send-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+    margin-bottom: 1px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .send-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 14px var(--accent-glow);
+  }
+
+  .send-btn:active { transform: scale(0.95); }
+  .send-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+  .send-btn svg { width: 17px; height: 17px; color: #ffffff; }
+
+  .input-footer {
+    max-width: 860px;
+    margin: 10px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .input-hint {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.01em;
+  }
+
+  .char-count {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* Suggestions */
+  .suggestions {
+    max-width: 860px;
+    margin: 0 auto 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow-x: hidden;
+  }
+
+  .sug-btn {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.79rem;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.85);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .sug-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(230,50,35,0.15);
+  }
+
+  /* Error */
+  .error-note {
+    font-size: 0.8rem;
+    color: #e8694a;
+    padding: 11px 16px;
+    background: rgba(232,105,74,0.08);
+    border: 1px solid rgba(232,105,74,0.25);
+    border-radius: 10px;
+    margin-top: 10px;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Clear button */
+  .clear-btn {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.5);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.18s;
+    letter-spacing: 0.02em;
+  }
+
+  .clear-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    transform: scale(1.03);
+  }
+
+  .clear-btn:active {
+    transform: scale(0.97);
+  }
+
+  @media (max-width: 640px) {
+    /* Header — compact but legible */
+    header { padding: 10px 14px; }
+    .ep-count { display: none; }
+    .header-title { font-size: 1.1rem; }
+    .header-sub { font-size: 0.6rem; }
+    .header-right { gap: 8px; }
+    .status-dot { font-size: 0.68rem; gap: 5px; }
+    .clear-btn { font-size: 0.66rem; padding: 4px 8px; }
+    .logo-mark { width: 36px; height: 36px; }
+
+    /* Messages — tighter, smaller font so responses don't over-wrap */
+    #messages { padding: 14px 12px; gap: 14px; }
+    .msg-row { gap: 8px; max-width: 100%; }
+    .msg-row.user { max-width: 100%; }
+    .msg-row.user .bubble { max-width: 85%; }
+    .bubble { padding: 11px 13px; font-size: 0.82rem; line-height: 1.6; }
+    .avatar { width: 26px; height: 26px; font-size: 0.65rem; margin-top: 1px; }
+
+    /* Episode cards — readable but compact */
+    .ep-cards { gap: 6px; margin-top: 10px; }
+    .ep-card { padding: 9px 10px; gap: 8px; }
+    .ep-num { font-size: 0.62rem; padding: 2px 6px; }
+    .ep-title { font-size: 0.78rem; }
+    .ep-tags { gap: 4px; }
+    .ep-tag { font-size: 0.58rem; padding: 2px 5px; }
+    .ep-listen { font-size: 0.65rem; }
+
+    /* Input area — stays anchored, keyboard-friendly */
+    .input-area { padding: 8px 12px 10px; }
+    .input-wrap { padding: 9px 11px; border-radius: 12px; gap: 8px; }
+    textarea { font-size: 0.86rem; min-height: 20px; }
+    .send-btn { width: 32px; height: 32px; min-width: 32px; border-radius: 8px; }
+    .send-btn svg { width: 14px; height: 14px; }
+    .input-hint { font-size: 0.62rem; margin-top: 5px; }
+
+    /* Suggestions — two per row on mobile, not full-width stacked */
+    .suggestions {
+      gap: 6px;
+      margin-bottom: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .sug-btn {
+      font-size: 0.72rem;
+      padding: 8px 10px;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.3;
+    }
+  }
+
+  /* Extra small phones */
+  @media (max-width: 380px) {
+    .header-title { font-size: 0.95rem; }
+    .bubble { font-size: 0.78rem; }
+    .sug-btn { font-size: 0.68rem; padding: 7px 8px; }
+  }
+
+  /* API KEY GATE */
+  #keyGate {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+
+  .key-card {
+    background: #0d0d0d;
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 40px 44px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+  }
+
+  .key-logo {
+    width: 48px;
+    height: 48px;
+    background: var(--accent);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+
+  .key-logo svg { width: 26px; height: 26px; }
+
+  .key-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .key-sub {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .key-sub a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .key-sub a:hover { text-decoration: underline; }
+
+  .key-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .key-input-wrap {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  #keyInput {
+    flex: 1;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: monospace;
+    letter-spacing: 0.04em;
+  }
+
+  #keyInput::placeholder {
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0;
+  }
+
+  #keyInput:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  .key-submit {
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 22px;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+
+  .key-submit:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+
+  .key-submit:active { transform: scale(0.97); }
+
+  .key-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .key-note strong { color: var(--text-dim); font-weight: 500; }
+
+  .key-error {
+    font-size: 0.78rem;
+    color: #e8694a;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .key-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-left: 8px;
+  }
+
+  .key-badge:hover { border-color: var(--text-muted); color: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<!-- API KEY GATE -->
+<div id="keyGate">
+  <div class="key-card">
+    <div class="key-logo" style="background:#000;border:2px solid var(--accent);box-shadow:0 0 24px var(--accent-glow);">
+      <span style="font-family:'Barlow Condensed',sans-serif;color:#e63223;font-weight:800;font-size:2rem;line-height:1;">/</span><span style="font-family:'Barlow Condensed',sans-serif;color:#2589e6;font-weight:800;font-size:2rem;line-height:1;">/</span>
+    </div>
+    <div class="key-title">Adam Carolla Show — Catalog Concierge</div>
+    <div class="key-sub">
+      Enter your Anthropic API key to get started. Your key is used only in this browser session — it's never stored or sent anywhere except directly to Anthropic.<br><br>
+      Don't have a key? Get one at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.
+    </div>
+    <div class="key-label">Anthropic API Key</div>
+    <div class="key-input-wrap">
+      <div style="position: relative; flex: 1; display: flex; align-items: center;">
+        <input type="password" id="keyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" style="width:100%; padding-right: 72px;" />
+        <button id="toggleBtn" onclick="toggleKeyVisibility()" style="position:absolute; right:10px; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:0.75rem; font-family:'DM Sans',sans-serif; padding:4px 6px; border-radius:4px; transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Show</button>
+      </div>
+      <button class="key-submit" onclick="submitKey()">Let's go →</button>
+    </div>
+    <div class="key-note">
+      <strong>Privacy:</strong> Your key is stored in memory only — closing or refreshing this tab clears it. It is never written to disk, logged, or sent anywhere other than the Anthropic API.
+    </div>
+    <div class="key-error" id="keyError"></div>
+  </div>
+</div>
+
+<header>
+  <a class="header-left" href="https://podcasts.apple.com/us/podcast/adam-carolla-show/id306390087" target="_blank" rel="noopener noreferrer" style="text-decoration:none; cursor:pointer;">
+    <div class="logo-mark" style="background:#000;display:flex;align-items:center;justify-content:center;border:1.5px solid #2a2a2a;gap:1px;">
+      <span style="font-family:'Barlow Condensed',sans-serif;color:#e63223;font-weight:800;font-size:1.7rem;line-height:1;transform:translateY(-1px);">/</span><span style="font-family:'Barlow Condensed',sans-serif;color:#2589e6;font-weight:800;font-size:1.7rem;line-height:1;transform:translateY(-1px);">/</span>
+    </div>
+    <div>
+      <div class="header-title">The Adam Caro<span style="color:#e63223;">/</span><span style="color:#2589e6;">/</span>a Show.</div>
+      <div class="header-sub">Catalog Concierge — POC</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <div class="ep-count"><strong>4,000+</strong> episodes · Daily since 2009</div>
+    <div class="status-dot"><div class="dot"></div>Live</div>
+    <button class="clear-btn" onclick="clearConversation()">New chat</button>
+    <span class="key-badge" onclick="resetKey()" title="Change API key">🔑 Key set</span>
+  </div>
+</header>
+
+<div id="messages"></div>
+
+<div class="input-area">
+  <div id="suggestions" class="suggestions"></div>
+  <div class="input-wrap">
+    <textarea id="input" rows="1" placeholder="What kind of episode are you in the mood for?" maxlength="2000"></textarea>
+    <button class="send-btn" id="sendBtn" disabled aria-label="Send message">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+  <div class="input-footer">
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; POC v0.1</span>
+    <span class="char-count" id="charCount"></span>
+  </div>
+  <div id="errorNote" class="error-note" style="display:none;"></div>
+</div>
+
+<script>
+// ─── SYSTEM PROMPT ────────────────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are the Adam Carolla Show concierge — a guide to one of the longest-running, highest-volume catalogs in podcasting. Your job is simple: help the listener find the episode that fits what they're in the mood for, fast. They press play, you step back.
+
+## VERIFIED SHOW FACTS
+These are ground truth. Always use these when answering questions about the show. Never infer or estimate when the answer is here.
+
+- Show: The Adam Carolla Show
+- Host: Adam Carolla
+- Network: PodcastOne / Carolla Digital
+- Years active: 2009 — present (15+ years)
+- Total episodes: 4,000+ (the show celebrated its 4,000th episode in September 2025)
+- Schedule: Updated daily — four new full episodes per week (Monday–Thursday) plus "Carolla Classics" replay episodes on the off days
+- Genre: Comedy
+- Apple Podcasts rating: 4.5 stars (37,000+ ratings)
+- Primary listening platforms: Apple Podcasts, Spotify, PodcastOne app
+- Show description on Apple: "Welcome to The Adam Carolla Show, the #1 Daily Downloaded Podcast in the World."
+
+## CURRENT SHOW CAST
+- **Adam Carolla** — host. Comedian, podcaster, builder, car enthusiast, former co-host of Loveline and The Man Show. Known for unfiltered humor, sharp observational rants, candid takes on pop culture, California politics, the entertainment industry, construction, cars, and daily life. He has strong opinions and a particular comedic voice.
+- **Elisha Krauss** — current news segment co-host. Joins Adam for the daily news block. Journalist contributing to the Washington Examiner.
+- **Superfan Giovanni** — host of "Carolla Classics," curates and presents replay episodes from the show's deep archive.
+- Rotating expert and comedian guest contributors. Recent guests include Jonathan Kite, Brad Williams, Jason "Mayhem" Miller, David Mamet, Janiyah Thomas, and many more.
+
+## HISTORICAL CAST (referenced in older / Classics episodes)
+- Bryan Bishop — longtime news co-host through the 2010s
+- Alison Rosen — early co-host (2010–2012 era)
+- Gina Grad — mid-era co-host
+- Ray Oldhafer — recurring contributor
+
+## EPISODE FORMAT
+Each show generally falls into one of three categories:
+
+1. **DAILY EPISODES** — Adam opens with a personal story or rant, brings on a celebrity / comedian / expert guest for a long interview, then closes with the news segment with Elisha Krauss. These are the meat of the show.
+
+2. **LIVE PODCASTS** — Recorded at venues like Belly Up Solana Beach, Laugh Factory Covina, the Wiltern, etc. Usually with a comedian guest. Looser, rowdier, performed for an audience.
+
+3. **CAROLLA CLASSICS** — Replay episodes hosted by Superfan Giovanni, pulled from the archive. Typically pair two episodes from the early-to-mid 2010s featuring the original cast (Adam + Bryan Bishop + Alison Rosen / Gina Grad). Great for newer listeners wanting catalog depth or longtime fans wanting a nostalgic deep cut.
+
+## CORE IDENTITY
+You are a knowledgeable concierge of the Adam Carolla catalog. You speak ABOUT Adam and his show — never AS Adam. Imagine the most catalog-fluent superfan you know, working the front desk of a record store dedicated to Adam's show, helping every visitor find the right thing to listen to right now.
+
+## VOICE & TONE — for the AGENT, not Adam
+- **Action-oriented**: get them to an episode quickly. The goal is "press play," not "keep chatting."
+- **Catalog-fluent**: you know what kind of show is right for what kind of listener
+- **Respectful of the host**: never put words in Adam's mouth. When referencing his views, attribute clearly: "Adam talks about..." or "On a recent episode, Adam covers..." — never "I think..." or "I've said..."
+- **Honest about scale**: with 4,000+ episodes, you don't pretend exhaustive coverage. You focus on what's recent, what matches their interest, and what's iconic from the Classics.
+- **Politically neutral as a guide**: Adam's show has strong opinions. You don't editorialize on his takes, defend them, or argue against them. You describe what an episode covers and let the listener decide.
+- **Lead with the listener's interest before recommending.** A two-sentence acknowledgment beats jumping straight to a list.
+
+## SCOPE
+**FOR:**
+- Helping listeners find episodes — by guest, topic, mood, format, or how much time they have
+- Routing first-time listeners to a good entry point
+- Recommending Classics for catalog depth
+- Matching long-drive listeners to Live Podcasts or double-feature Classics
+- Explaining the show's structure and recurring cast
+
+**NOT FOR:**
+- Political debate or commentary on Adam's views
+- Defending or critiquing his opinions
+- Pretending to be Adam or generating content "in his voice"
+- Quoting Adam directly (you don't have transcripts, so any "quote" would be invented — never fabricate)
+- Speculating about content of specific episodes you don't have metadata for
+
+## COMMON LISTENER REQUESTS — How to handle each
+- "I'm new to the show, where do I start?" → Recommend ONE recent daily episode with a guest the listener might recognize, plus optionally ONE Carolla Classic for catalog flavor.
+- "I want to hear Adam rant about [California / EVs / construction / Hollywood]" → Match recent episodes by topic from descriptions.
+- "Got a long drive, what's good?" → Recent Live Podcast OR a Classics double-feature (those run 3+ hours).
+- "I want celebrity / comedian interviews" → Match by guest from the catalog.
+- "I want comedy, not politics today" → Steer toward Live Podcasts and comedian guests, away from heavy news episodes.
+- "What did Adam say about [recent event]?" → Match by date and description; describe what the episode covers, do not paraphrase Adam.
+
+## RESPONSE STYLE
+- Lead with one short sentence acknowledging what they're after
+- Recommend 1–3 episodes max, never more
+- When recommending, refer to episodes by their internal number (e.g. "Ep. 3"). The system will render an episode card automatically when you mention "Ep. N" where N is from our catalog list below.
+- Keep replies under 5 sentences when possible
+- One closing question only if the conversation is still finding its angle. Once you've made a recommendation, let it land — don't keep them chatting.
+- Use prose. No bullets in your replies unless the user asks for a list.
+
+## PRE-SEND CHECKLIST
+Before every reply, run this check:
+1. Am I speaking AS Adam, or fabricating a quote? If yes — rewrite to speak ABOUT him.
+2. Am I editorializing on his political views? If yes — strip it.
+3. Did I recommend more than 3 episodes? If yes — cut to the strongest 1–2.
+4. Did I reference an episode that's not in our catalog list? If yes — only reference what's in the list.
+5. Am I keeping them in conversation when I should be sending them to listen? If yes — wrap up and let them go.
+
+## SOURCE ATTRIBUTION
+The catalog list provided to you is the only source of episode-specific facts. For show-level facts (cast, format, history, etc.) use the VERIFIED SHOW FACTS section. Anything beyond that — say so honestly. "I don't have that episode in my list, but you can browse the full archive on Apple Podcasts."`;
+
+// ─── EPISODE DATA ─────────────────────────────────────────────────────────────
+// Episodes scraped from Apple Podcasts. Each entry uses internal ID (1-N) for
+// agent reference and includes the full Apple Podcasts deep-link URL.
+// To expand: pull more from https://itunes.apple.com/lookup?id=306390087&entity=podcastEpisode&limit=200
+const APPLE_SHOW_ID = "306390087";
+const buildAppleUrl = (slug, appleId) =>
+  `https://podcasts.apple.com/us/podcast/${slug}/id${APPLE_SHOW_ID}?i=${appleId}`;
+
+const EPISODE_DATA = {
+  1: {
+    title: "LA Mayoral Candidate Tish Hyman + James Comey Indicted",
+    type: "Daily",
+    date: "Apr 2026",
+    tags: ["Interview", "News", "Politics"],
+    guest: "Tish Hyman, Rudy Pavich",
+    summary: "Tish Hyman, musician and LA mayoral candidate, talks campaign and her plan for the city. News segment covers Comey indictment, NYC budget crisis, and the LA mayoral race.",
+    url: buildAppleUrl("la-mayoral-candidate-tish-hyman-is-fighting-for-real", "1000764646009")
+  },
+  2: {
+    title: "Live from Belly Up, Solana Beach with Jonathan Kite",
+    type: "Live Podcast",
+    date: "Apr 2026",
+    tags: ["Live", "Comedy", "Comedian Guest"],
+    guest: "Jonathan Kite",
+    summary: "Live podcast at the Belly Up in Solana Beach with actor and comedian Jonathan Kite. Looser format, recorded for a live audience.",
+    url: buildAppleUrl("live-from-belly-up-solana-beach-with-jonathan-kite", "1000764252445")
+  },
+  3: {
+    title: "Wildfire Update + White House Correspondents' Shooting",
+    type: "Daily",
+    date: "Apr 2026",
+    tags: ["Rant", "News", "California"],
+    guest: "Elisha Krauss",
+    summary: "Adam updates on wildfire rebuilding, calls out an over-permitted house in Malibu, rants about unions, and reacts to the new Hulk Hogan documentary. News covers the Correspondents' Dinner shooting.",
+    url: buildAppleUrl("shocking-wildfire-update-adam-carolla-is-furious-white", "1000763982025")
+  },
+  4: {
+    title: "Brad Williams On Getting Sued For Jokes + California Governor's Debate",
+    type: "Daily",
+    date: "Apr 2026",
+    tags: ["Comedian Guest", "Comedy", "Politics"],
+    guest: "Brad Williams, Elisha Krauss",
+    summary: "Comedian Brad Williams on his career, his lawsuits, and his new special. News segment reacts to the California governor's debate featuring Steve Hilton, Chad Bianco, Katie Porter and others.",
+    url: buildAppleUrl("brad-williams-on-getting-sued-for-jokes-adam-carolla", "1000763766650")
+  },
+  5: {
+    title: "Chuck Negron + Stephen Malkmus (Carolla Classics)",
+    type: "Classics",
+    date: "Apr 2026 (originals from 2018)",
+    tags: ["Classics", "Music", "Double Feature"],
+    guest: "Chuck Negron, Stephen Malkmus",
+    summary: "Carolla Classics double feature hosted by Superfan Giovanni. ACS #2282 (2018) with Chuck Negron and ACS #2292 (2018) with Stephen Malkmus. Both feature original cast: Gina Grad and Bryan Bishop.",
+    url: buildAppleUrl("chuck-negron-stephen-malkmus-carolla-classics", "1000763639628")
+  },
+  6: {
+    title: "Lake Bell + Carol Polis (Carolla Classics)",
+    type: "Classics",
+    date: "Apr 2026 (originals from 2012)",
+    tags: ["Classics", "Celebrity", "Double Feature"],
+    guest: "Lake Bell, Carol Polis",
+    summary: "Carolla Classics double feature. ACS #933 (2012) with Lake Bell and ACS #934 (2012) with Carol Polis. Original cast: Alison Rosen and Bryan Bishop.",
+    url: buildAppleUrl("lake-bell-carol-polis-carolla-classics", "1000763530985")
+  },
+  7: {
+    title: "Patrick Muldoon + Dom Irrera (Carolla Classics)",
+    type: "Classics",
+    date: "Apr 2026 (originals from 2012)",
+    tags: ["Classics", "Comedian Guest", "Double Feature"],
+    guest: "Patrick Muldoon, Dom Irrera",
+    summary: "Carolla Classics double feature. ACS #877 (2012) with Patrick Muldoon and ACS #878 (2012) with Dom Irrera. Original cast: Alison Rosen and Bryan Bishop.",
+    url: buildAppleUrl("patrick-muldoon-carolla-classics", "1000763489598")
+  },
+  8: {
+    title: "Janiyah Thomas on How the Left Talks Down to Black People",
+    type: "Daily",
+    date: "Apr 23, 2026",
+    tags: ["Interview", "Politics", "Media"],
+    guest: "Janiyah Thomas, Elisha Krauss",
+    summary: "Janiyah Thomas, Trump's former Black media manager, on politics, media narratives, and the SPLC scandal. News covers DOJ allegations against the SPLC and Ilhan Omar's disclosure issues.",
+    url: buildAppleUrl("janiyah-thomas-on-how-the-left-talks-down-to-black-people", "1000763207026")
+  }
+};
+
+const SUGGESTIONS = [
+  "I'm new to the show — where do I start?",
+  "Got a long drive — what's good?",
+  "I want comedian guests, not politics today"
+];
+
+// Build a catalog block at runtime that gets appended to the system prompt
+function buildCatalogBlock() {
+  const lines = ["", "## CURRENT CATALOG (the only episodes you can recommend)"];
+  Object.entries(EPISODE_DATA).forEach(([id, ep]) => {
+    lines.push(
+      `**Ep. ${id}** — ${ep.title}`,
+      `  Type: ${ep.type} | Date: ${ep.date} | Guest(s): ${ep.guest}`,
+      `  Tags: ${ep.tags.join(", ")}`,
+      `  Summary: ${ep.summary}`,
+      ""
+    );
+  });
+  lines.push(
+    "When recommending an episode, reference it as 'Ep. N' using the internal numbers above. The system will render a clickable card linking to Apple Podcasts.",
+    "Do not invent episodes. Only recommend from the list above.",
+    "If a listener asks for something not covered by this list, acknowledge the catalog limit and suggest browsing the full archive on Apple Podcasts."
+  );
+  return lines.join("\n");
+}
+
+// ─── API PROXY ────────────────────────────────────────────────────────────────
+// Cloudflare Worker that forwards requests to Anthropic with the server-side
+// API key attached. See carolla_worker.js for the deployed code.
+const PROXY_URL = 'https://corolla-poc.jsasse-5c6.workers.dev';
+
+// ─── API KEY ──────────────────────────────────────────────────────────────────
+let apiKey = '';
+
+function toggleKeyVisibility() {
+  const inp = document.getElementById('keyInput');
+  const btn = document.getElementById('toggleBtn');
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.textContent = 'Hide';
+    btn.style.color = 'var(--accent)';
+  } else {
+    inp.type = 'password';
+    btn.textContent = 'Show';
+    btn.style.color = 'var(--text-muted)';
+  }
+}
+
+function submitKey() {
+  const val = document.getElementById('keyInput').value.trim();
+  const errEl = document.getElementById('keyError');
+  if (!val.startsWith('sk-ant-') || val.length < 20) {
+    errEl.textContent = 'That doesn\'t look like a valid Anthropic API key. It should start with sk-ant-';
+    errEl.style.display = 'block';
+    return;
+  }
+  apiKey = val;
+  errEl.style.display = 'none';
+  document.getElementById('keyGate').style.display = 'none';
+  document.querySelector('.key-badge').style.display = 'inline-flex';
+  inputEl.focus();
+}
+
+function resetKey() {
+  apiKey = '';
+  document.getElementById('keyInput').value = '';
+  document.getElementById('keyError').style.display = 'none';
+  document.getElementById('keyGate').style.display = 'flex';
+}
+
+// Allow Enter key in key input
+document.getElementById('keyInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitKey();
+});
+
+
+let conversation = [];
+let isLoading = false;
+
+const messagesEl  = document.getElementById('messages');
+const inputEl     = document.getElementById('input');
+const sendBtn     = document.getElementById('sendBtn');
+const suggestionsEl = document.getElementById('suggestions');
+const errorNote   = document.getElementById('errorNote');
+const charCount   = document.getElementById('charCount');
+
+// Key is hardcoded — hide the gate and show the badge immediately
+document.getElementById('keyGate').style.display = 'none';
+document.querySelector('.key-badge').style.display = 'none'; // hide badge too since key mgmt not needed
+
+// ─── BUILD SUGGESTIONS ────────────────────────────────────────────────────────
+SUGGESTIONS.forEach(s => {
+  const btn = document.createElement('button');
+  btn.className = 'sug-btn';
+  btn.textContent = s;
+  btn.onclick = () => {
+    inputEl.value = s;
+    autoResize();
+    suggestionsEl.style.display = 'none';
+    sendMessage();
+  };
+  suggestionsEl.appendChild(btn);
+});
+
+// ─── GREETING ─────────────────────────────────────────────────────────────────
+setTimeout(() => {
+  const greeting = `Welcome. I'm the catalog concierge for The Adam Carolla Show — 4,000+ episodes deep and counting, and your job here is to spend as little time with me as possible before you find an episode worth pressing play on.\n\nTell me what you're in the mood for. New to the show and need a starting point? Long drive ahead and want something you can sink into? Looking for a specific guest, or a vintage Classic from the early days? Want comedy without the news segment today?\n\nThe more you tell me about what you actually want, the faster I get you to the right episode. Pick a starter below or just type whatever comes to mind.`;
+  addMessage('agent', greeting);
+  conversation.push({ role: 'assistant', content: greeting });
+}, 350);
+
+// ─── INPUT HANDLING ───────────────────────────────────────────────────────────
+inputEl.addEventListener('input', () => {
+  autoResize();
+  const len = inputEl.value.length;
+  sendBtn.disabled = len === 0;
+  charCount.textContent = len > 1800 ? `${len}/2000` : '';
+});
+
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!sendBtn.disabled && !isLoading) sendMessage();
+  }
+});
+
+sendBtn.addEventListener('click', () => { if (!isLoading) sendMessage(); });
+
+function autoResize() {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
+}
+
+// ─── RENDER HELPERS ───────────────────────────────────────────────────────────
+function parseMarkdown(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+function extractEpisodeRefs(text) {
+  const matches = [];
+  const seen = new Set();
+
+  // Primary: match "Ep. N" / "Episode N" pattern (1-2 digits to avoid accidental long-number matches)
+  const regex = /Ep(?:isode)?\.?\s*(\d{1,2})\b/gi;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const num = parseInt(match[1]);
+    if (EPISODE_DATA[num] && !seen.has(num)) {
+      seen.add(num);
+      matches.push(num);
+    }
+  }
+
+  // Secondary: match by guest name (case-insensitive), useful when the
+  // agent references "the Brad Williams episode" without saying Ep. N
+  Object.entries(EPISODE_DATA).forEach(([id, ep]) => {
+    const num = parseInt(id);
+    if (seen.has(num)) return;
+    if (!ep.guest) return;
+    const guests = ep.guest.split(',').map(g => g.trim()).filter(g => g.length > 4);
+    for (const g of guests) {
+      if (text.toLowerCase().includes(g.toLowerCase())) {
+        seen.add(num);
+        matches.push(num);
+        break;
+      }
+    }
+  });
+
+  return matches;
+}
+
+function addMessage(role, text) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = `avatar ${role}`;
+  avatar.textContent = role === 'agent' ? 'AC' : 'You';
+
+  const bubble = document.createElement('div');
+  bubble.className = `bubble ${role}`;
+  bubble.innerHTML = `<p>${parseMarkdown(text)}</p>`;
+
+  if (role === 'agent') {
+    const epRefs = extractEpisodeRefs(text);
+    if (epRefs.length > 0) {
+      const cardsDiv = document.createElement('div');
+      cardsDiv.className = 'ep-cards';
+      epRefs.forEach(num => {
+        const ep = EPISODE_DATA[num];
+        if (!ep) return;
+        const card = document.createElement('a');
+        card.className = 'ep-card';
+        card.href = ep.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.innerHTML = `
+          <div class="ep-num" style="text-transform:uppercase;font-size:0.65rem;">${ep.type}</div>
+          <div class="ep-info">
+            <div class="ep-title">${ep.title}</div>
+            <div class="ep-tags">${ep.tags.slice(0,2).map(t => `<span class="ep-tag">${t}</span>`).join('')}</div>
+            <div class="ep-listen">Listen on Apple Podcasts →</div>
+          </div>`;
+        cardsDiv.appendChild(card);
+      });
+      bubble.appendChild(cardsDiv);
+    }
+  }
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  messagesEl.appendChild(row);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function addTyping() {
+  const row = document.createElement('div');
+  row.className = 'msg-row agent';
+  row.id = 'typing-indicator';
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar agent';
+  avatar.textContent = 'AC';
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  row.appendChild(avatar);
+  row.appendChild(typing);
+  messagesEl.appendChild(row);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+// ─── CLEAR CONVERSATION ───────────────────────────────────────────────────────
+function clearConversation() {
+  conversation = [];
+  messagesEl.innerHTML = '';
+  suggestionsEl.style.display = 'flex';
+  errorNote.style.display = 'none';
+  setTimeout(() => {
+    const greeting = `Welcome. I'm the catalog concierge for The Adam Carolla Show — 4,000+ episodes deep and counting, and your job here is to spend as little time with me as possible before you find an episode worth pressing play on.\n\nTell me what you're in the mood for. New to the show and need a starting point? Long drive ahead and want something you can sink into? Looking for a specific guest, or a vintage Classic from the early days? Want comedy without the news segment today?\n\nThe more you tell me about what you actually want, the faster I get you to the right episode. Pick a starter below or just type whatever comes to mind.`;
+    addMessage('agent', greeting);
+    conversation.push({ role: 'assistant', content: greeting });
+  }, 200);
+}
+
+// ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
+async function sendMessage() {
+  const text = inputEl.value.trim();
+  if (!text || isLoading) return;
+
+  suggestionsEl.style.display = 'none';
+  errorNote.style.display = 'none';
+
+  inputEl.value = '';
+  autoResize();
+  sendBtn.disabled = true;
+  charCount.textContent = '';
+
+  addMessage('user', text);
+  conversation.push({ role: 'user', content: text });
+
+  isLoading = true;
+  addTyping();
+
+  try {
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT + "\n" + buildCatalogBlock(),
+        messages: conversation
+      })
+    });
+
+    removeTyping();
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || "I hit a snag on my end — try again in a moment.";
+
+    addMessage('agent', reply);
+    conversation.push({ role: 'assistant', content: reply });
+
+  } catch (err) {
+    removeTyping();
+    console.error('Carolla concierge error:', err);
+    errorNote.textContent = `Something went wrong: ${err.message}. Check your connection and try again.`;
+    errorNote.style.display = 'block';
+    conversation.pop();
+  }
+
+  isLoading = false;
+  // Only auto-focus on desktop — on mobile this triggers the keyboard
+  // which covers the response the user just received
+  if (!('ontouchstart' in window)) {
+    inputEl.focus();
+  }
+}
+</script>
+</body>
+</html>
