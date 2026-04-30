@@ -800,7 +800,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; POC v0.1</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; <span id="versionLabel"></span></span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1007,6 +1007,10 @@ function buildCatalogBlock() {
   return lines.join("\n");
 }
 
+// ─── BUILD VERSION ────────────────────────────────────────────────────────────
+// Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
+const APP_VERSION = '1.0.0';
+
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
 // API key attached. See carolla_worker.js for the deployed code.
@@ -1066,6 +1070,9 @@ const sendBtn     = document.getElementById('sendBtn');
 const suggestionsEl = document.getElementById('suggestions');
 const errorNote   = document.getElementById('errorNote');
 const charCount   = document.getElementById('charCount');
+
+// Inject build version into footer
+document.getElementById('versionLabel').textContent = 'v' + APP_VERSION;
 
 // Key is hardcoded — hide the gate and show the badge immediately
 document.getElementById('keyGate').style.display = 'none';
