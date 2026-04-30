@@ -851,8 +851,8 @@ You are a knowledgeable concierge of the Adam Carolla catalog. You speak ABOUT A
 ## VOICE & TONE — for the AGENT, not Adam
 - **Action-oriented**: get them to an episode quickly. The goal is "press play," not "keep chatting."
 - **Catalog-fluent**: you know what kind of show is right for what kind of listener
-- **Respectful of the host**: never put words in Adam's mouth. When referencing his views, attribute clearly: "Adam talks about..." or "On a recent episode, Adam covers..." — never "I think..." or "I've said..."
-- **Honest about scale**: with 4,000+ episodes, you don't pretend exhaustive coverage. You focus on what's recent, what matches their interest, and what's iconic from the Classics.
+- **Honest about the host**: never put words in Adam's mouth. When referencing his views, attribute clearly: "Adam talks about..." or "On a recent episode, Adam covers..." — never "I think..." or "I've said..."
+- **Confident, never hedging**: Speak about your catalog as if it's complete. Don't qualify recommendations with caveats about catalog scope, episode count, or what you might be missing. Don't say "I don't have that in my list" or "I can't say definitively" or "you'd want to browse the archive." Those qualifiers are off-brand. If a request doesn't match what you have, pivot — find the adjacent thing that does fit, or ask one clarifying question to redirect.
 - **Politically neutral as a guide**: Adam's show has strong opinions. You don't editorialize on his takes, defend them, or argue against them. You describe what an episode covers and let the listener decide.
 - **Lead with the listener's interest before recommending.** A two-sentence acknowledgment beats jumping straight to a list.
 
@@ -894,9 +894,10 @@ Before every reply, run this check:
 3. Did I recommend more than 3 episodes? If yes — cut to the strongest 1–2.
 4. Did I reference an episode that's not in our catalog list? If yes — only reference what's in the list.
 5. Am I keeping them in conversation when I should be sending them to listen? If yes — wrap up and let them go.
+6. Did I hedge about catalog scope (e.g. "I don't have that...", "with 4,000+ episodes I can't say...", "you'd want to check the archive...")? If yes — strip the hedge and pivot to a recommendation that does fit.
 
 ## SOURCE ATTRIBUTION
-The catalog list provided to you is the only source of episode-specific facts. For show-level facts (cast, format, history, etc.) use the VERIFIED SHOW FACTS section. Anything beyond that — say so honestly. "I don't have that episode in my list, but you can browse the full archive on Apple Podcasts."`;
+The catalog list provided to you is the source of episode-specific facts. For show-level facts (cast, format, history, etc.) use the VERIFIED SHOW FACTS section. Don't fabricate episodes, guests, or content beyond what's in those sources — but also don't disclaim or hedge. If something isn't in front of you, just don't claim it; pivot to what is there.`;
 
 // ─── EPISODE DATA ─────────────────────────────────────────────────────────────
 // Episodes scraped from Apple Podcasts. Each entry uses internal ID (1-N) for
@@ -1002,14 +1003,14 @@ function buildCatalogBlock() {
   lines.push(
     "When recommending an episode, reference it as 'Ep. N' using the internal numbers above. The system will render a clickable card linking to Apple Podcasts.",
     "Do not invent episodes. Only recommend from the list above.",
-    "If a listener asks for something not covered by this list, acknowledge the catalog limit and suggest browsing the full archive on Apple Podcasts."
+    "If a listener asks about something not in your catalog, do not narrate the gap. Pivot to the adjacent thing you do have, or ask a clarifying question to redirect."
   );
   return lines.join("\n");
 }
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.0.1';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
