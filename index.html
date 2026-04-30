@@ -544,14 +544,50 @@
     .bubble { padding: 11px 13px; font-size: 0.82rem; line-height: 1.6; }
     .avatar { width: 26px; height: 26px; font-size: 0.65rem; margin-top: 1px; }
 
-    /* Episode cards — readable but compact */
-    .ep-cards { gap: 6px; margin-top: 10px; }
-    .ep-card { padding: 9px 10px; gap: 8px; }
-    .ep-num { font-size: 0.62rem; padding: 2px 6px; }
-    .ep-title { font-size: 0.78rem; }
-    .ep-tags { gap: 4px; }
-    .ep-tag { font-size: 0.58rem; padding: 2px 5px; }
-    .ep-listen { font-size: 0.65rem; }
+    /* Episode cards — stack vertically so titles can breathe on narrow screens */
+    .ep-cards { gap: 8px; margin-top: 12px; }
+    .ep-card {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 10px 12px;
+      gap: 8px;
+      border-left-width: 3px;
+    }
+    .ep-num {
+      align-self: flex-start;
+      font-size: 0.6rem;
+      padding: 3px 8px;
+      letter-spacing: 0.04em;
+    }
+    .ep-info {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      align-items: stretch;
+      grid-template-columns: none;
+    }
+    .ep-title {
+      font-size: 0.85rem;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+    .ep-tags {
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .ep-tag {
+      font-size: 0.6rem;
+      padding: 2px 7px;
+    }
+    .ep-listen {
+      font-size: 0.72rem;
+      padding-top: 7px;
+      border-top: 1px solid #2a2a2a;
+      margin-top: 1px;
+    }
 
     /* Input area — stays anchored, keyboard-friendly */
     .input-area { padding: 8px 12px 10px; }
@@ -1010,7 +1046,7 @@ function buildCatalogBlock() {
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
