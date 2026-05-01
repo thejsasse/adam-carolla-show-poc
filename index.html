@@ -41,19 +41,33 @@
     height: 100dvh;
   }
 
-  /* Adam Carolla brand portrait — dedicated fixed-position div so it doesn't
-     fight body's flex layout or stacking context. Sits behind all content via
-     negative z-index. Body is transparent, so html's bg-color shows through
-     where the image doesn't reach. Upload carolla_bg.jpg to the same directory. */
+  /* Adam Carolla brand portrait — dedicated fixed-position div sitting at
+     z-index: 0 inside body's stacking context. Content elements (header,
+     #messages, .input-area) get explicit position:relative + z-index:1 so they
+     layer cleanly above the image. Avoids the negative-z-index trap where the
+     image can render behind html's bg-color on some browsers.
+     Upload carolla_bg.jpg to the same directory as this HTML. */
   .brand-bg {
     position: fixed;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
     background-image: url(./carolla_bg.jpg);
     background-position: right center;
     background-repeat: no-repeat;
     background-size: contain;
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
+  }
+
+  /* Layer all content above the brand-bg image */
+  header, #messages, .input-area {
+    position: relative;
+    z-index: 1;
   }
 
   /* Drop the brand portrait below 1100px — at narrower widths the chat column
@@ -7193,7 +7207,7 @@ function buildCatalogBlock(latestUserMessage) {
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.0.9';
+const APP_VERSION = '1.1.0';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
