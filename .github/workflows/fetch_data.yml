@@ -17,19 +17,24 @@ jobs:
 
       - name: Fetch and Process Podcast Data
         run: |
+          # 1. Fetch the full RSS feed
           curl -L -sS 'https://rss.art19.com/adam-carolla-show' -o carolla_rss.xml
+          
+          # 2. Create the slim index file for Claude
           grep -E '<title>|<pubDate>' carolla_rss.xml > carolla_index.txt
+
+          # 3. Fetch the Apple API data (JSON format)
+          curl -L -sS 'https://itunes.apple.com/lookup?id=306390087&entity=podcastEpisode&limit=200' -o carolla_apple.json
 
       - name: Commit and Push to Repository
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add carolla_rss.xml carolla_index.txt
+          git add carolla_rss.xml carolla_index.txt carolla_apple.json
           
-          # This check prevents "Exit Code 1" if the files haven't changed
           if git diff --quiet && git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Database Sync: $(date +'%Y-%m-%d %H:%M')"
+            git commit -m "Database Sync (RSS + Apple): $(date +'%Y-%m-%d %H:%M')"
             git push
           fi
