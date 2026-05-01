@@ -827,7 +827,12 @@
 </head>
 <body>
 
-<img class="brand-bg" src="./carolla_bg.jpg" alt="" aria-hidden="true">
+<img class="brand-bg" src="./carolla_bg.jpg" alt="" aria-hidden="true"
+     onload="document.getElementById('bg-debug').innerHTML='✓ Image loaded ('+this.naturalWidth+'×'+this.naturalHeight+')<br>Computed display: '+getComputedStyle(this).display+'<br>Computed width: '+getComputedStyle(this).width+'<br>Computed height: '+getComputedStyle(this).height+'<br>Computed z-index: '+getComputedStyle(this).zIndex"
+     onerror="document.getElementById('bg-debug').innerText='✗ Image FAILED to load — check Network tab'">
+
+<!-- TEMPORARY DEBUG OVERLAY - remove in next build -->
+<div id="bg-debug" style="position:fixed;top:80px;left:10px;background:rgba(255,255,0,0.95);color:#000;padding:10px 14px;z-index:99999;font-family:monospace;font-size:11px;line-height:1.5;border:2px solid #000;border-radius:6px;max-width:400px;">Image loading...</div>
 
 <!-- API KEY GATE -->
 <div id="keyGate">
@@ -7207,7 +7212,7 @@ function buildCatalogBlock(latestUserMessage) {
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.1.1';
+const APP_VERSION = '1.1.2';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
