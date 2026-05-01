@@ -17,24 +17,25 @@ jobs:
 
       - name: Fetch and Process Podcast Data
         run: |
-          # 1. Fetch the full RSS feed
+          # 1. Fetch the full RSS feed (The deep archive)
           curl -L -sS 'https://rss.art19.com/adam-carolla-show' -o carolla_rss.xml
           
           # 2. Create the slim index file for Claude
           grep -E '<title>|<pubDate>' carolla_rss.xml > carolla_index.txt
 
-          # 3. Fetch the Apple API data (JSON format)
-          curl -L -sS 'https://itunes.apple.com/lookup?id=306390087&entity=podcastEpisode&limit=200' -o carolla_apple.json
+          # 3. Fetch the expanded Apple API data (JSON format)
+          # Note: Apple usually caps this at 200-500, but 600 ensures the maximum pull.
+          curl -L -sS 'https://itunes.apple.com/lookup?id=306390087&entity=podcastEpisode&limit=600' -o carolla_apple_full.json
 
       - name: Commit and Push to Repository
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add carolla_rss.xml carolla_index.txt carolla_apple.json
+          git add carolla_rss.xml carolla_index.txt carolla_apple_full.json
           
           if git diff --quiet && git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Database Sync (RSS + Apple): $(date +'%Y-%m-%d %H:%M')"
+            git commit -m "Database Sync (Expanded Apple Pull): $(date +'%Y-%m-%d %H:%M')"
             git push
           fi
