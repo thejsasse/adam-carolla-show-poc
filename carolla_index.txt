@@ -1,5 +1,7 @@
     <title>Adam Carolla Show</title>
       <title>Adam Carolla Show</title>
+      <title>Crispin Glover + Stephen Mitchell (Carolla Classics)</title>
+      <pubDate>Fri, 01 May 2026 07:00:00 -0000</pubDate>
       <title>LA Mayoral Candidate Tish Hyman is Fighting for REAL WOMEN + James Comey INDICTED!</title>
       <pubDate>Thu, 30 Apr 2026 07:00:00 -0000</pubDate>
       <title>Live from Belly Up, Solana Beach with Jonathan Kite</title>
