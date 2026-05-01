@@ -179,7 +179,7 @@
     flex-direction: column;
     gap: 28px;
     scroll-behavior: smooth;
-    background: var(--bg);
+    background: transparent;
     width: 100%;
     box-sizing: border-box;
   }
@@ -827,12 +827,7 @@
 </head>
 <body>
 
-<img class="brand-bg" src="./carolla_bg.jpg" alt="" aria-hidden="true"
-     onload="document.getElementById('bg-debug').innerHTML='✓ Image loaded ('+this.naturalWidth+'×'+this.naturalHeight+')<br>Computed display: '+getComputedStyle(this).display+'<br>Computed width: '+getComputedStyle(this).width+'<br>Computed height: '+getComputedStyle(this).height+'<br>Computed z-index: '+getComputedStyle(this).zIndex"
-     onerror="document.getElementById('bg-debug').innerText='✗ Image FAILED to load — check Network tab'">
-
-<!-- TEMPORARY DEBUG OVERLAY - remove in next build -->
-<div id="bg-debug" style="position:fixed;top:80px;left:10px;background:rgba(255,255,0,0.95);color:#000;padding:10px 14px;z-index:99999;font-family:monospace;font-size:11px;line-height:1.5;border:2px solid #000;border-radius:6px;max-width:400px;">Image loading...</div>
+<img class="brand-bg" src="./carolla_bg.jpg" alt="" aria-hidden="true">
 
 <!-- API KEY GATE -->
 <div id="keyGate">
@@ -977,7 +972,7 @@ You are a knowledgeable concierge of the Adam Carolla catalog. You speak ABOUT A
 - **When you have additional matches you didn't surface, tell the listener.** Use a line like: "These are a strong starting point — there are more matches if you want them." Then stop. Wait for them to ask.
 - **Only if the user explicitly asks for more, you may surface up to 5 episodes in that follow-up.** Five is the absolute ceiling, never exceeded.
 - When recommending, refer to episodes by their internal number (e.g. "Ep. 47"). The system will render an episode card automatically when you say "Ep. N" with N being an episode in the catalog window.
-- Episode IDs in the window range from 1 (newest) to 6080 (oldest from Feb 2009). Use whichever fits the listener's interest — recent for current events, Classics for deep cuts.
+- The catalog window spans Feb 2009 to present. Use whichever fits the listener's interest — recent for current events, vintage for deep cuts.
 - Keep replies under 5 sentences when possible.
 - One closing question only if the conversation is still finding its angle. Once you've made a recommendation, let it land — don't keep them chatting.
 - Use prose. No bullets in your replies unless the user asks for a list.
@@ -1039,206 +1034,206 @@ function isMobile() {
 }
 
 const EPISODE_DATA = {
-  1:{t:"LA Mayoral Candidate Tish Hyman is Fighting for REAL WOMEN + James Comey INDICTED!",d:"Apr 30, 2026",iso:"2026-04-30",type:"Daily"},
-  2:{t:"Live from Belly Up, Solana Beach with Jonathan Kite",d:"Apr 29, 2026",iso:"2026-04-29",type:"Live"},
-  3:{t:"SHOCKING Wildfire Update - Adam Carolla is FURIOUS! + White House Correspondents\u2019 Shooting",d:"Apr 28, 2026",iso:"2026-04-28",type:"Daily"},
-  4:{t:"Brad Williams On Getting Sued For Jokes + Adam Carolla Reacts to the California Governor\u2019s Debate",d:"Apr 27, 2026",iso:"2026-04-27",type:"Daily"},
-  5:{t:"Chuck Negron + Stephen Malkmus (Carolla Classics)",d:"Apr 26, 2026",iso:"2026-04-26",type:"Classics"},
-  6:{t:"Lake Bell + Carol Polis (Carolla Classics)",d:"Apr 25, 2026",iso:"2026-04-25",type:"Classics"},
-  7:{t:"Patrick Muldoon (Carolla Classics)",d:"Apr 24, 2026",iso:"2026-04-24",type:"Classics"},
-  8:{t:"Janiyah Thomas on How the Left Talks Down to Black People",d:"Apr 23, 2026",iso:"2026-04-23",type:"Daily"},
-  9:{t:"Spencer Pratt Gets Adam Carolla\u2019s Endorsement for LA Mayor!",d:"Apr 22, 2026",iso:"2026-04-22",type:"Daily"},
-  10:{t:"Live with Jay Mohr from Adam\u2019s Car Show",d:"Apr 21, 2026",iso:"2026-04-21",type:"Live"},
-  11:{t:"Lanha Turner on Intimacy with 800lb Ralphie May & Elaine Culotti on Eric Swalwell",d:"Apr 20, 2026",iso:"2026-04-20",type:"Daily"},
-  12:{t:"Kate Flannery + Alison and Bryan (Carolla Classics)",d:"Apr 19, 2026",iso:"2026-04-19",type:"Classics"},
-  13:{t:"Ben Schwartz + Jim Gaffigan (Carolla Classics)",d:"Apr 18, 2026",iso:"2026-04-18",type:"Classics"},
-  14:{t:"Bryan Cranston + Greg Fitzsimmons (Carolla Classics)",d:"Apr 17, 2026",iso:"2026-04-17",type:"Classics"},
-  15:{t:"Trump Texts Adam?! + Greg Fitzsimmons on Comedy Store Legends & Hack Court",d:"Apr 16, 2026",iso:"2026-04-16",type:"Daily"},
-  16:{t:"NSYNC Secrets: Joey Fatone on Lou Pearlman, Band Drama & Fame",d:"Apr 15, 2026",iso:"2026-04-15",type:"Daily"},
-  17:{t:"Dildos vs ICE Agents?! John Crist on Protests, Karens & Comedy",d:"Apr 14, 2026",iso:"2026-04-14",type:"Daily"},
-  18:{t:"Ed Elson On Why Gen Z Is So Miserable (And What No One Wants to Admit)",d:"Apr 13, 2026",iso:"2026-04-13",type:"Daily"},
-  19:{t:"Daniel Pyne + Michael Anthony (Carolla Classics)",d:"Apr 12, 2026",iso:"2026-04-12",type:"Classics"},
-  20:{t:"Naomi Grossman + Teresa and Bryan (Carolla Classics)",d:"Apr 11, 2026",iso:"2026-04-11",type:"Classics"},
-  21:{t:"Beth Stelling + Lita Ford (Carolla Classics)",d:"Apr 10, 2026",iso:"2026-04-10",type:"Classics"},
-  22:{t:"Luke Hemsworth: From Manual Labor to Hollywood + The Hemsworth Work Ethic",d:"Apr 9, 2026",iso:"2026-04-09",type:"Daily"},
-  23:{t:"From Wall Street to Stand-Up: Arynne Wexler on Comedy & Why More Liberals are Turning Right",d:"Apr 8, 2026",iso:"2026-04-08",type:"Daily"},
-  24:{t:"Kelly Rizzo Talks Bob Saget\u2019s Legacy & His Late Embrace of Danny Tanner",d:"Apr 7, 2026",iso:"2026-04-07",type:"Daily"},
-  25:{t:"Rob Morrow Talks Mushroom Parties, Paul Newman, and How To Make Timeless Television",d:"Apr 6, 2026",iso:"2026-04-06",type:"Daily"},
-  26:{t:"Adam De La Pena + Paul F. Tompkins (Carolla Classics)",d:"Apr 5, 2026",iso:"2026-04-05",type:"Classics"},
-  27:{t:"Sonny Carolla + Fred Dryer (Carolla Classics)",d:"Apr 4, 2026",iso:"2026-04-04",type:"Classics"},
-  28:{t:"Dave Attell + Will Forte (Carolla Classics)",d:"Apr 3, 2026",iso:"2026-04-03",type:"Classics"},
-  29:{t:"Landon Donovan on Soccer, Tough Coaching & Today\u2019s Soft Culture",d:"Apr 2, 2026",iso:"2026-04-02",type:"Daily"},
-  30:{t:"Jay Mewes on Clerks, Kevin Smith & His Heroin Addiction + Man Caught Rubbing His Junk on Woman in Grocery Store",d:"Apr 1, 2026",iso:"2026-04-01",type:"Daily"},
-  31:{t:"Xi Van Fleet Warns About China\u2019s Influence in America",d:"Mar 31, 2026",iso:"2026-03-31",type:"Daily"},
-  32:{t:"Chloe Cole on Transitioning as a Child & Why She\u2019s Now Warning Parents",d:"Mar 30, 2026",iso:"2026-03-30",type:"Daily"},
-  33:{t:"Jake Steinfeld + Chuck Zito (Carolla Classics)",d:"Mar 29, 2026",iso:"2026-03-29",type:"Classics"},
-  34:{t:"Alana Stewart + Dana Workman (Carolla Classics)",d:"Mar 28, 2026",iso:"2026-03-28",type:"Classics"},
-  35:{t:"Graham Parker + Wyclef Jean (Carolla Classics)",d:"Mar 27, 2026",iso:"2026-03-27",type:"Classics"},
-  36:{t:"Paget Brewster on Hollywood\u2019s Changes, Rude Culture & Adam\u2019s DEI Rant",d:"Mar 26, 2026",iso:"2026-03-26",type:"Daily"},
-  37:{t:"Bill O\u2019Reilly on Trump\u2019s Next Move & Why America Is at a Turning Point",d:"Mar 25, 2026",iso:"2026-03-25",type:"Daily"},
-  38:{t:"Pete Holmes Roasts Ellen and Does Al Pacino Impression",d:"Mar 24, 2026",iso:"2026-03-24",type:"Daily"},
-  39:{t:"Brian Austin Green on Surviving Hollywood as a Teen + The Housing Economy Struggle",d:"Mar 23, 2026",iso:"2026-03-23",type:"Daily"},
-  40:{t:"Dave Dameshek + Lisa Lampanelli (Carolla Classics)",d:"Mar 22, 2026",iso:"2026-03-22",type:"Classics"},
-  41:{t:"John Densmore + Michael Dubin (Carolla Classics)",d:"Mar 21, 2026",iso:"2026-03-21",type:"Classics"},
-  42:{t:"Judd Apatow + Plain White T's (Carolla Classics)",d:"Mar 20, 2026",iso:"2026-03-20",type:"Classics"},
-  43:{t:"Why Unfunny Comedy Succeeds + Mayhem Miller on Rousey vs Carano",d:"Mar 19, 2026",iso:"2026-03-19",type:"Daily"},
-  44:{t:"Chris Hansen Says We Need the Death Penalty",d:"Mar 18, 2026",iso:"2026-03-18",type:"Daily"},
-  45:{t:"Dan Abrams: Why People Hate Cops & What the Media Gets Wrong",d:"Mar 17, 2026",iso:"2026-03-17",type:"Daily"},
-  46:{t:"Rob Schneider Annihilates Fauci and Talks Norm Macdonald Documentary",d:"Mar 16, 2026",iso:"2026-03-16",type:"Daily"},
-  47:{t:"Dana Carvey + Jay Mohr (Carolla Classics)",d:"Mar 15, 2026",iso:"2026-03-15",type:"Classics"},
-  48:{t:"Alec Baldwin + Gina and Bryan (Carolla Classics)",d:"Mar 14, 2026",iso:"2026-03-14",type:"Classics"},
-  49:{t:"Norm Macdonald + Adam Ray (Carolla Classics)",d:"Mar 13, 2026",iso:"2026-03-13",type:"Classics"},
-  50:{t:"Jeff Dunham: Owning the Batmobile & Adam\u2019s Call with Jerry Seinfeld",d:"Mar 12, 2026",iso:"2026-03-12",type:"Daily"},
-  51:{t:"Ted Nugent Rejects Your Labels and Identity Politics",d:"Mar 11, 2026",iso:"2026-03-11",type:"Daily"},
-  52:{t:"Jesse Kelly on Obama, Communism & Why the Left Hates America",d:"Mar 10, 2026",iso:"2026-03-10",type:"Daily"},
-  53:{t:"Buck Sexton Exposes the War on Sanity + Rep. Nancy Mace EMBARRASSES Tim Walz",d:"Mar 9, 2026",iso:"2026-03-09",type:"Daily"},
-  54:{t:"Phoebe Robinson + Tom Arnold (Carolla Classics)",d:"Mar 8, 2026",iso:"2026-03-08",type:"Classics"},
-  55:{t:"Remembering Phil (Carolla Classics)",d:"Mar 7, 2026",iso:"2026-03-07",type:"Classics"},
-  56:{t:"Danny Trejo + Paul Scheer (Carolla Classics)",d:"Mar 6, 2026",iso:"2026-03-06",type:"Classics"},
-  57:{t:"James Woods Tells Wild Hollywood Stories + the Dark Side of Politics",d:"Mar 5, 2026",iso:"2026-03-05",type:"Daily"},
-  58:{t:"Rest in Peace, Phil",d:"Mar 4, 2026",iso:"2026-03-04",type:"Daily"},
-  59:{t:"Why the Government Lied about COVID w/ Gavin de Becker",d:"Mar 3, 2026",iso:"2026-03-03",type:"Daily"},
+  1:{t:"LA Mayoral Candidate Tish Hyman is Fighting for REAL WOMEN + James Comey INDICTED!",d:"Apr 30, 2026",iso:"2026-04-30",type:"Daily",aid:"1000764646009",aslug:"la-mayoral-candidate-tish-hyman-is-fighting-for-real"},
+  2:{t:"Live from Belly Up, Solana Beach with Jonathan Kite",d:"Apr 29, 2026",iso:"2026-04-29",type:"Live",aid:"1000764252445",aslug:"live-from-belly-up-solana-beach-with-jonathan-kite"},
+  3:{t:"SHOCKING Wildfire Update - Adam Carolla is FURIOUS! + White House Correspondents\u2019 Shooting",d:"Apr 28, 2026",iso:"2026-04-28",type:"Daily",aid:"1000763982025",aslug:"shocking-wildfire-update-adam-carolla-is-furious-white"},
+  4:{t:"Brad Williams On Getting Sued For Jokes + Adam Carolla Reacts to the California Governor\u2019s Debate",d:"Apr 27, 2026",iso:"2026-04-27",type:"Daily",aid:"1000763766650",aslug:"brad-williams-on-getting-sued-for-jokes-adam-carolla"},
+  5:{t:"Chuck Negron + Stephen Malkmus (Carolla Classics)",d:"Apr 26, 2026",iso:"2026-04-26",type:"Classics",aid:"1000763639628",aslug:"chuck-negron-stephen-malkmus-carolla-classics"},
+  6:{t:"Lake Bell + Carol Polis (Carolla Classics)",d:"Apr 25, 2026",iso:"2026-04-25",type:"Classics",aid:"1000763530985",aslug:"lake-bell-carol-polis-carolla-classics"},
+  7:{t:"Patrick Muldoon (Carolla Classics)",d:"Apr 24, 2026",iso:"2026-04-24",type:"Classics",aid:"1000763489598",aslug:"patrick-muldoon-carolla-classics"},
+  8:{t:"Janiyah Thomas on How the Left Talks Down to Black People",d:"Apr 23, 2026",iso:"2026-04-23",type:"Daily",aid:"1000763207026",aslug:"janiyah-thomas-on-how-the-left-talks-down-to-black-people"},
+  9:{t:"Spencer Pratt Gets Adam Carolla\u2019s Endorsement for LA Mayor!",d:"Apr 22, 2026",iso:"2026-04-22",type:"Daily",aid:"1000763020648",aslug:"spencer-pratt-gets-adam-carollas-endorsement-for-la-mayor"},
+  10:{t:"Live with Jay Mohr from Adam\u2019s Car Show",d:"Apr 21, 2026",iso:"2026-04-21",type:"Live",aid:"1000762531656",aslug:"live-with-jay-mohr-from-adams-car-show"},
+  11:{t:"Lanha Turner on Intimacy with 800lb Ralphie May & Elaine Culotti on Eric Swalwell",d:"Apr 20, 2026",iso:"2026-04-20",type:"Daily",aid:"1000762352769",aslug:"lanha-turner-on-intimacy-with-800lb-ralphie-may-elaine"},
+  12:{t:"Kate Flannery + Alison and Bryan (Carolla Classics)",d:"Apr 19, 2026",iso:"2026-04-19",type:"Classics",aid:"1000762218204",aslug:"kate-flannery-alison-and-bryan-carolla-classics"},
+  13:{t:"Ben Schwartz + Jim Gaffigan (Carolla Classics)",d:"Apr 18, 2026",iso:"2026-04-18",type:"Classics",aid:"1000762168491",aslug:"ben-schwartz-jim-gaffigan-carolla-classics"},
+  14:{t:"Bryan Cranston + Greg Fitzsimmons (Carolla Classics)",d:"Apr 17, 2026",iso:"2026-04-17",type:"Classics",aid:"1000762045171",aslug:"bryan-cranston-greg-fitzsimmons-carolla-classics"},
+  15:{t:"Trump Texts Adam?! + Greg Fitzsimmons on Comedy Store Legends & Hack Court",d:"Apr 16, 2026",iso:"2026-04-16",type:"Daily",aid:"1000761758613",aslug:"trump-texts-adam-greg-fitzsimmons-on-comedy-store-legends"},
+  16:{t:"NSYNC Secrets: Joey Fatone on Lou Pearlman, Band Drama & Fame",d:"Apr 15, 2026",iso:"2026-04-15",type:"Daily",aid:"1000761482668",aslug:"nsync-secrets-joey-fatone-on-lou-pearlman-band-drama-fame"},
+  17:{t:"Dildos vs ICE Agents?! John Crist on Protests, Karens & Comedy",d:"Apr 14, 2026",iso:"2026-04-14",type:"Daily",aid:"1000761252689",aslug:"dildos-vs-ice-agents-john-crist-on-protests-karens-comedy"},
+  18:{t:"Ed Elson On Why Gen Z Is So Miserable (And What No One Wants to Admit)",d:"Apr 13, 2026",iso:"2026-04-13",type:"Daily",aid:"1000761051167",aslug:"ed-elson-on-why-gen-z-is-so-miserable-and-what-no-one"},
+  19:{t:"Daniel Pyne + Michael Anthony (Carolla Classics)",d:"Apr 12, 2026",iso:"2026-04-12",type:"Classics",aid:"1000760907596",aslug:"daniel-pyne-michael-anthony-carolla-classics"},
+  20:{t:"Naomi Grossman + Teresa and Bryan (Carolla Classics)",d:"Apr 11, 2026",iso:"2026-04-11",type:"Classics",aid:"1000760844816",aslug:"naomi-grossman-teresa-and-bryan-carolla-classics"},
+  21:{t:"Beth Stelling + Lita Ford (Carolla Classics)",d:"Apr 10, 2026",iso:"2026-04-10",type:"Classics",aid:"1000760844128",aslug:"beth-stelling-lita-ford-carolla-classics"},
+  22:{t:"Luke Hemsworth: From Manual Labor to Hollywood + The Hemsworth Work Ethic",d:"Apr 9, 2026",iso:"2026-04-09",type:"Daily",aid:"1000760416089",aslug:"luke-hemsworth-from-manual-labor-to-hollywood-the"},
+  23:{t:"From Wall Street to Stand-Up: Arynne Wexler on Comedy & Why More Liberals are Turning Right",d:"Apr 8, 2026",iso:"2026-04-08",type:"Daily",aid:"1000760202417",aslug:"from-wall-street-to-stand-up-arynne-wexler-on-comedy"},
+  24:{t:"Kelly Rizzo Talks Bob Saget\u2019s Legacy & His Late Embrace of Danny Tanner",d:"Apr 7, 2026",iso:"2026-04-07",type:"Daily",aid:"1000759986968",aslug:"kelly-rizzo-talks-bob-sagets-legacy-his-late-embrace"},
+  25:{t:"Rob Morrow Talks Mushroom Parties, Paul Newman, and How To Make Timeless Television",d:"Apr 6, 2026",iso:"2026-04-06",type:"Daily",aid:"1000759494187",aslug:"rob-morrow-talks-mushroom-parties-paul-newman-and-how"},
+  26:{t:"Adam De La Pena + Paul F. Tompkins (Carolla Classics)",d:"Apr 5, 2026",iso:"2026-04-05",type:"Classics",aid:"1000759353713",aslug:"adam-de-la-pena-paul-f-tompkins-carolla-classics"},
+  27:{t:"Sonny Carolla + Fred Dryer (Carolla Classics)",d:"Apr 4, 2026",iso:"2026-04-04",type:"Classics",aid:"1000759290422",aslug:"sonny-carolla-fred-dryer-carolla-classics"},
+  28:{t:"Dave Attell + Will Forte (Carolla Classics)",d:"Apr 3, 2026",iso:"2026-04-03",type:"Classics",aid:"1000759288836",aslug:"dave-attell-will-forte-carolla-classics"},
+  29:{t:"Landon Donovan on Soccer, Tough Coaching & Today\u2019s Soft Culture",d:"Apr 2, 2026",iso:"2026-04-02",type:"Daily",aid:"1000758802451",aslug:"landon-donovan-on-soccer-tough-coaching-todays-soft"},
+  30:{t:"Jay Mewes on Clerks, Kevin Smith & His Heroin Addiction + Man Caught Rubbing His Junk on Woman in Grocery Store",d:"Apr 1, 2026",iso:"2026-04-01",type:"Daily",aid:"1000758601601",aslug:"jay-mewes-on-clerks-kevin-smith-his-heroin-addiction"},
+  31:{t:"Xi Van Fleet Warns About China\u2019s Influence in America",d:"Mar 31, 2026",iso:"2026-03-31",type:"Daily",aid:"1000758376198",aslug:"xi-van-fleet-warns-about-chinas-influence-in-america"},
+  32:{t:"Chloe Cole on Transitioning as a Child & Why She\u2019s Now Warning Parents",d:"Mar 30, 2026",iso:"2026-03-30",type:"Daily",aid:"1000758165996",aslug:"chloe-cole-on-transitioning-as-a-child-why-shes-now"},
+  33:{t:"Jake Steinfeld + Chuck Zito (Carolla Classics)",d:"Mar 29, 2026",iso:"2026-03-29",type:"Classics",aid:"1000758002050",aslug:"jake-steinfeld-chuck-zito-carolla-classics"},
+  34:{t:"Alana Stewart + Dana Workman (Carolla Classics)",d:"Mar 28, 2026",iso:"2026-03-28",type:"Classics",aid:"1000757971997",aslug:"alana-stewart-dana-workman-carolla-classics"},
+  35:{t:"Graham Parker + Wyclef Jean (Carolla Classics)",d:"Mar 27, 2026",iso:"2026-03-27",type:"Classics",aid:"1000757786856",aslug:"graham-parker-wyclef-jean-carolla-classics"},
+  36:{t:"Paget Brewster on Hollywood\u2019s Changes, Rude Culture & Adam\u2019s DEI Rant",d:"Mar 26, 2026",iso:"2026-03-26",type:"Daily",aid:"1000757443769",aslug:"paget-brewster-on-hollywoods-changes-rude-culture-adams"},
+  37:{t:"Bill O\u2019Reilly on Trump\u2019s Next Move & Why America Is at a Turning Point",d:"Mar 25, 2026",iso:"2026-03-25",type:"Daily",aid:"1000757215166",aslug:"bill-oreilly-on-trumps-next-move-why-america-is-at"},
+  38:{t:"Pete Holmes Roasts Ellen and Does Al Pacino Impression",d:"Mar 24, 2026",iso:"2026-03-24",type:"Daily",aid:"1000756940456",aslug:"pete-holmes-roasts-ellen-and-does-al-pacino-impression"},
+  39:{t:"Brian Austin Green on Surviving Hollywood as a Teen + The Housing Economy Struggle",d:"Mar 23, 2026",iso:"2026-03-23",type:"Daily",aid:"1000756708956",aslug:"brian-austin-green-on-surviving-hollywood-as-a-teen"},
+  40:{t:"Dave Dameshek + Lisa Lampanelli (Carolla Classics)",d:"Mar 22, 2026",iso:"2026-03-22",type:"Classics",aid:"1000756606478",aslug:"dave-dameshek-lisa-lampanelli-carolla-classics"},
+  41:{t:"John Densmore + Michael Dubin (Carolla Classics)",d:"Mar 21, 2026",iso:"2026-03-21",type:"Classics",aid:"1000756519363",aslug:"john-densmore-michael-dubin-carolla-classics"},
+  42:{t:"Judd Apatow + Plain White T's (Carolla Classics)",d:"Mar 20, 2026",iso:"2026-03-20",type:"Classics",aid:"1000756513637",aslug:"judd-apatow-plain-white-ts-carolla-classics"},
+  43:{t:"Why Unfunny Comedy Succeeds + Mayhem Miller on Rousey vs Carano",d:"Mar 19, 2026",iso:"2026-03-19",type:"Daily",aid:"1000756096478",aslug:"why-unfunny-comedy-succeeds-mayhem-miller-on-rousey"},
+  44:{t:"Chris Hansen Says We Need the Death Penalty",d:"Mar 18, 2026",iso:"2026-03-18",type:"Daily",aid:"1000755909178",aslug:"chris-hansen-says-we-need-the-death-penalty"},
+  45:{t:"Dan Abrams: Why People Hate Cops & What the Media Gets Wrong",d:"Mar 17, 2026",iso:"2026-03-17",type:"Daily",aid:"1000755716399",aslug:"dan-abrams-why-people-hate-cops-what-the-media-gets-wrong"},
+  46:{t:"Rob Schneider Annihilates Fauci and Talks Norm Macdonald Documentary",d:"Mar 16, 2026",iso:"2026-03-16",type:"Daily",aid:"1000755521848",aslug:"rob-schneider-annihilates-fauci-and-talks-norm"},
+  47:{t:"Dana Carvey + Jay Mohr (Carolla Classics)",d:"Mar 15, 2026",iso:"2026-03-15",type:"Classics",aid:"1000755366315",aslug:"dana-carvey-jay-mohr-carolla-classics"},
+  48:{t:"Alec Baldwin + Gina and Bryan (Carolla Classics)",d:"Mar 14, 2026",iso:"2026-03-14",type:"Classics",aid:"1000755327750",aslug:"alec-baldwin-gina-and-bryan-carolla-classics"},
+  49:{t:"Norm Macdonald + Adam Ray (Carolla Classics)",d:"Mar 13, 2026",iso:"2026-03-13",type:"Classics",aid:"1000755322261",aslug:"norm-macdonald-adam-ray-carolla-classics"},
+  50:{t:"Jeff Dunham: Owning the Batmobile & Adam\u2019s Call with Jerry Seinfeld",d:"Mar 12, 2026",iso:"2026-03-12",type:"Daily",aid:"1000754806585",aslug:"jeff-dunham-owning-the-batmobile-adams-call-with"},
+  51:{t:"Ted Nugent Rejects Your Labels and Identity Politics",d:"Mar 11, 2026",iso:"2026-03-11",type:"Daily",aid:"1000754613963",aslug:"ted-nugent-rejects-your-labels-and-identity-politics"},
+  52:{t:"Jesse Kelly on Obama, Communism & Why the Left Hates America",d:"Mar 10, 2026",iso:"2026-03-10",type:"Daily",aid:"1000754415216",aslug:"jesse-kelly-on-obama-communism-why-the-left-hates-america"},
+  53:{t:"Buck Sexton Exposes the War on Sanity + Rep. Nancy Mace EMBARRASSES Tim Walz",d:"Mar 9, 2026",iso:"2026-03-09",type:"Daily",aid:"1000753965960",aslug:"buck-sexton-exposes-the-war-on-sanity-rep-nancy-mace"},
+  54:{t:"Phoebe Robinson + Tom Arnold (Carolla Classics)",d:"Mar 8, 2026",iso:"2026-03-08",type:"Classics",aid:"1000753872798",aslug:"phoebe-robinson-tom-arnold-carolla-classics"},
+  55:{t:"Remembering Phil (Carolla Classics)",d:"Mar 7, 2026",iso:"2026-03-07",type:"Classics",aid:"1000753826993",aslug:"remembering-phil-carolla-classics"},
+  56:{t:"Danny Trejo + Paul Scheer (Carolla Classics)",d:"Mar 6, 2026",iso:"2026-03-06",type:"Classics",aid:"1000753821362",aslug:"danny-trejo-paul-scheer-carolla-classics"},
+  57:{t:"James Woods Tells Wild Hollywood Stories + the Dark Side of Politics",d:"Mar 5, 2026",iso:"2026-03-05",type:"Daily",aid:"1000753183034",aslug:"james-woods-tells-wild-hollywood-stories-the-dark"},
+  58:{t:"Rest in Peace, Phil",d:"Mar 4, 2026",iso:"2026-03-04",type:"Daily",aid:"1000753012564",aslug:"rest-in-peace-phil"},
+  59:{t:"Why the Government Lied about COVID w/ Gavin de Becker",d:"Mar 3, 2026",iso:"2026-03-03",type:"Daily",aid:"1000752842740",aslug:"why-the-government-lied-about-covid-w-gavin-de-becker"},
   60:{t:"Monique Marvez \u201cWhen The Schlong is Too Long\u201d",d:"Mar 2, 2026",iso:"2026-03-02",type:"Daily"},
-  61:{t:"Patrick Dempsey + Tucker Carlson (Carolla Classics)",d:"Mar 1, 2026",iso:"2026-03-01",type:"Classics"},
-  62:{t:"Jimmy Kimmel + Haley Joel Osment (Carolla Classics)",d:"Feb 28, 2026",iso:"2026-02-28",type:"Classics"},
-  63:{t:"Mark-Paul Gosselaar + Dr. Drew (Carolla Classics)",d:"Feb 27, 2026",iso:"2026-02-27",type:"Classics"},
-  64:{t:"Jon Taffer on Running The Troubadour and How Less Drinking Affects Restaurants",d:"Feb 26, 2026",iso:"2026-02-26",type:"Daily"},
-  65:{t:"Earthquake\u2019s Wild Military Stories, How Steve Harvey Made Him + His New Bill Burr Sitcom",d:"Feb 25, 2026",iso:"2026-02-25",type:"Daily"},
-  66:{t:"Bruce Bruce: The Wild Path From Frito-Lay Worker to Comedy Legend",d:"Feb 24, 2026",iso:"2026-02-24",type:"Daily"},
-  67:{t:"Republican Steve Hilton on His Rapid Rise in California Governor Race",d:"Feb 23, 2026",iso:"2026-02-23",type:"Daily"},
-  68:{t:"Ron Funches + Gary Sinise (Carolla Classics)",d:"Feb 22, 2026",iso:"2026-02-22",type:"Classics"},
-  69:{t:"Alex Winter + Brian Regan (Carolla Classics)",d:"Feb 21, 2026",iso:"2026-02-21",type:"Classics"},
-  70:{t:"Brian Posehn + Ben Bailey (Carolla Classics)",d:"Feb 20, 2026",iso:"2026-02-20",type:"Classics"},
-  71:{t:"Jackie Fabulous On Going Viral & Wanting to Date a Male Comic",d:"Feb 19, 2026",iso:"2026-02-19",type:"Daily"},
-  72:{t:"Rob Riggle On Why Young Men Need Hardship",d:"Feb 18, 2026",iso:"2026-02-18",type:"Daily"},
-  73:{t:"Crazy White People and The New Political Shift In Hollywood",d:"Feb 17, 2026",iso:"2026-02-17",type:"Daily"},
-  74:{t:"Are Mel Brooks Movies Actually Funny? w/ Adam Yenser + Obama Criticizes LA\u2019s Homeless Crisis",d:"Feb 16, 2026",iso:"2026-02-16",type:"Daily"},
-  75:{t:"Larry Miller + Hanson (Carolla Classics)",d:"Feb 15, 2026",iso:"2026-02-15",type:"Classics"},
-  76:{t:"Alex Arato + Troy Duffy (Carolla Classics)",d:"Feb 14, 2026",iso:"2026-02-14",type:"Classics"},
-  77:{t:"Dana Gould + Will Sasso (Carolla Classics)",d:"Feb 13, 2026",iso:"2026-02-13",type:"Classics"},
-  78:{t:"Big Ed Spills 90 Day Fianc\u00e9 Secrets + From Viral Videos to Feature Films \u2014 Kinnane Bros Tell All",d:"Feb 12, 2026",iso:"2026-02-12",type:"Daily"},
-  79:{t:"Jamie Lissow Talks Homosexuals In Saunas, Rob Schneider &  Springsteen\u2019s Political Turn",d:"Feb 11, 2026",iso:"2026-02-11",type:"Daily"},
-  80:{t:"Benny Johnson EXPOSES California\u2019s Homeless Fraud",d:"Feb 10, 2026",iso:"2026-02-10",type:"Daily"},
-  81:{t:"Adam Carolla & Michael Yo LIVE: Florida\u2019s Iguanas & Growing Up Poor",d:"Feb 9, 2026",iso:"2026-02-09",type:"Daily"},
-  82:{t:"Greg Fitzsimmons + Kevin Sorbo (Carolla Classics)",d:"Feb 8, 2026",iso:"2026-02-08",type:"Classics"},
-  83:{t:"Bill Simmons + Shaun White (Carolla Classics)",d:"Feb 7, 2026",iso:"2026-02-07",type:"Classics"},
-  84:{t:"John Popper + Gina and Bryan (Carolla Classics)",d:"Feb 6, 2026",iso:"2026-02-06",type:"Classics"},
-  85:{t:"Adam Carolla & Megyn Kelly UNFILTERED: Fox News, Rumors & Media Chaos",d:"Feb 5, 2026",iso:"2026-02-05",type:"Daily"},
-  86:{t:"Andrew Gruel: How Tough Coaches Made Strong Men and Eating on a Budget",d:"Feb 4, 2026",iso:"2026-02-04",type:"Daily"},
-  87:{t:"Stolen Land, ICE Out + More Idiotic Political Statements at Grammys",d:"Feb 3, 2026",iso:"2026-02-03",type:"Daily"},
-  88:{t:"Scaramucci Talks Catholic School + Dunnigan Does His Best Impressions Yet",d:"Feb 2, 2026",iso:"2026-02-02",type:"Daily"},
-  89:{t:"John Popper + Matt Walsh (Carolla Classics)",d:"Feb 1, 2026",iso:"2026-02-01",type:"Classics"},
-  90:{t:"Dinesh D\u2019Souza + Ed Asner (Carolla Classics)",d:"Jan 31, 2026",iso:"2026-01-31",type:"Classics"},
-  91:{t:"Greg Fitzsimmons + David Wild (Carolla Classics)",d:"Jan 30, 2026",iso:"2026-01-30",type:"Classics"},
-  92:{t:"Charlotte McKinney Explains Why Hot Girls Get Cheated On",d:"Jan 29, 2026",iso:"2026-01-29",type:"Daily"},
-  93:{t:"Sam Tripoli on Free Speech, Culture Wars & Why He Gets Called a \u201cFascist\u201d",d:"Jan 28, 2026",iso:"2026-01-28",type:"Daily"},
-  94:{t:"Neal McDonough Talks Discipline, Marriage, and Working with the Rock",d:"Jan 27, 2026",iso:"2026-01-27",type:"Daily"},
-  95:{t:"Megyn Kelly Tells Protestors \u201cGet Hot and Get Effed\u201d",d:"Jan 26, 2026",iso:"2026-01-26",type:"Daily"},
-  96:{t:"Rob Riggle + Gabriel Iglesias (Carolla Classics)",d:"Jan 25, 2026",iso:"2026-01-25",type:"Classics"},
-  97:{t:"Jo Koy + Alison and Bryan (Carolla Classics)",d:"Jan 24, 2026",iso:"2026-01-24",type:"Classics"},
-  98:{t:"Jim Norton + Frank Stallone (Carolla Classics)",d:"Jan 23, 2026",iso:"2026-01-23",type:"Classics"},
-  99:{t:"Greg Fitzsimmons Explains Hollywood Math, Bad Podcasts & Comedy Myths",d:"Jan 22, 2026",iso:"2026-01-22",type:"Daily"},
-  100:{t:"Deontay Wilder On Fighting With No Rules & Possibly Joining UFC",d:"Jan 21, 2026",iso:"2026-01-21",type:"Daily"},
-  101:{t:"Gavin Newsom\u2019s Thoughts on GOD and Trans Kids + Should Don Lemon Be Arrested?",d:"Jan 20, 2026",iso:"2026-01-20",type:"Daily"},
-  102:{t:"Dana Gould and Adam Pitch a Perfect 80\u2019s Movie",d:"Jan 19, 2026",iso:"2026-01-19",type:"Daily"},
-  103:{t:"Dave Dameshek (Carolla Classics)",d:"Jan 18, 2026",iso:"2026-01-18",type:"Classics"},
-  104:{t:"Dr. Drew + Teresa and Bryan (Carolla Classics)",d:"Jan 17, 2026",iso:"2026-01-17",type:"Classics"},
-  105:{t:"Mike Tollin + Ben Browning (Carolla Classics)",d:"Jan 16, 2026",iso:"2026-01-16",type:"Classics"},
-  106:{t:"Sean Duffy Destroys Gavin Newsom\u2019s Illegal Truckers",d:"Jan 15, 2026",iso:"2026-01-15",type:"Daily"},
-  107:{t:"Erica Rhodes Explains the Difference Between Stalkers and Fans for Men vs Women",d:"Jan 14, 2026",iso:"2026-01-14",type:"Daily"},
-  108:{t:"Eddie Bravo Talks Global Governments and How Producers Ruined the Man Show",d:"Jan 13, 2026",iso:"2026-01-13",type:"Daily"},
-  109:{t:"Paul Chowdhry Talks Assimilation, Racing and Funny Groin Injuries",d:"Jan 12, 2026",iso:"2026-01-12",type:"Daily"},
-  110:{t:"Orny Adams + Phil Rosenthal (Carolla Classics)",d:"Jan 11, 2026",iso:"2026-01-11",type:"Classics"},
-  111:{t:"Brian Whitman + Tim Allen (Carolla Classics)",d:"Jan 10, 2026",iso:"2026-01-10",type:"Classics"},
-  112:{t:"Dan Soder + Gilbert Gottfried (Carolla Classics)",d:"Jan 9, 2026",iso:"2026-01-09",type:"Classics"},
-  113:{t:"Why Louis C.K. Is Cancel-Proof",d:"Jan 8, 2026",iso:"2026-01-08",type:"Daily"},
-  114:{t:"C. Thomas Howell Learned to Smoke Cigs on Ride to E.T. Audition",d:"Jan 7, 2026",iso:"2026-01-07",type:"Daily"},
-  115:{t:"Mark Geragos talks Nick Reiner, Bill Cosby, Derek Chauvin and More",d:"Jan 6, 2026",iso:"2026-01-06",type:"Daily"},
-  116:{t:"The Warmth of Collectivism and the Collapse of Society: Welcome to 2026!",d:"Jan 5, 2026",iso:"2026-01-05",type:"Daily"},
-  117:{t:"Dennis Miller + Jo Koy (Carolla Classics)",d:"Jan 4, 2026",iso:"2026-01-04",type:"Classics"},
-  118:{t:"John Salley + Alison and Bryan (Carolla Classics)",d:"Jan 3, 2026",iso:"2026-01-03",type:"Classics"},
-  119:{t:"Paul Scheer + Alison and Bryan (Carolla Classics)",d:"Jan 2, 2026",iso:"2026-01-02",type:"Classics"},
-  120:{t:"Best of ACS: Ja Rule and Adam Ray, Drake Bell, Kevin Federline, and Bill O'Reilly",d:"Dec 30, 2025",iso:"2025-12-30",type:"Daily"},
-  121:{t:"Best of ACS: Paul Walter Hauser, Steve Guttenberg, Lou Diamond Phillips, and Dana Gould",d:"Dec 29, 2025",iso:"2025-12-29",type:"Daily"},
-  122:{t:"Jill Zarin + Alison and Bryan (Carolla Classics)",d:"Dec 28, 2025",iso:"2025-12-28",type:"Classics"},
-  123:{t:"Carlos Mencia + Winter Ave Zoli (Carolla Classics)",d:"Dec 27, 2025",iso:"2025-12-27",type:"Classics"},
-  124:{t:"Bai Ling + Zane Buzby (Carolla Classics)",d:"Dec 26, 2025",iso:"2025-12-26",type:"Classics"},
-  125:{t:"Santa Talks Christmas, Marriage Drama with Mrs. Claus, and Elf on the Shelf!",d:"Dec 24, 2025",iso:"2025-12-24",type:"Daily"},
-  126:{t:"The 2025 Adam Carolla Show Ace Awards: Rants, Special Guests, Interviews and More!",d:"Dec 23, 2025",iso:"2025-12-23",type:"Daily"},
-  127:{t:"LIVE from the Sagebrush Cantina with Brad Williams and Rick Sittig",d:"Dec 22, 2025",iso:"2025-12-22",type:"Live"},
-  128:{t:"Dana Gould + Vinnie Tortorich (Carolla Classics)",d:"Dec 21, 2025",iso:"2025-12-21",type:"Classics"},
-  129:{t:"Rob Reiner (Carolla Classics)",d:"Dec 20, 2025",iso:"2025-12-20",type:"Classics"},
-  130:{t:"Greg Fitzsimmons + Rich Eisen (Carolla Classics)",d:"Dec 19, 2025",iso:"2025-12-19",type:"Classics"},
-  131:{t:"Dr. Phil on Bad Parenting, ICE Raids, and Our Failed Education System",d:"Dec 18, 2025",iso:"2025-12-18",type:"Daily"},
-  132:{t:"Jim Norton & Adam Carolla on the Wild Evolution of the Trans Debate",d:"Dec 17, 2025",iso:"2025-12-17",type:"Daily"},
-  133:{t:"Ricky Nelson\u2019s Legacy, Elvis, and Growing up with George Harrison with The Nelson Twins",d:"Dec 16, 2025",iso:"2025-12-16",type:"Daily"},
-  134:{t:"Greg Fitzsimmons talks Big Hogs, Quitting Sobriety, and Conjugal Visits",d:"Dec 15, 2025",iso:"2025-12-15",type:"Daily"},
-  135:{t:"John Mulaney + Rich Eisen (Carolla Classics)",d:"Dec 14, 2025",iso:"2025-12-14",type:"Classics"},
-  136:{t:"French Stewart + Jo Koy (Carolla Classics)",d:"Dec 13, 2025",iso:"2025-12-13",type:"Classics"},
-  137:{t:"Dr. Drew + Elliot Gould (Carolla Classics)",d:"Dec 12, 2025",iso:"2025-12-12",type:"Classics"},
-  138:{t:"Kelsey Grammer on Trump, Newsom Running for President, and Malibu Fire Updates",d:"Dec 11, 2025",iso:"2025-12-11",type:"Daily"},
-  139:{t:"Sean Stone Talks RFK Jr. Documentary and Oliver Stone\u2019s Tough Love",d:"Dec 10, 2025",iso:"2025-12-10",type:"Daily"},
-  140:{t:"Made Up Movies with Adam Yenser and Macey Isaacs",d:"Dec 9, 2025",iso:"2025-12-09",type:"Daily"},
-  141:{t:"Debbie Matenopoulos on Why She Was Fired from The View & Newsom\u2019s Cringy Moment",d:"Dec 8, 2025",iso:"2025-12-08",type:"Daily"},
-  142:{t:"Marc Maron + Alison and Bryan (Carolla Classics)",d:"Dec 7, 2025",iso:"2025-12-07",type:"Classics"},
-  143:{t:"Lisa Lampanelli + Illeana Douglas (Carolla Classics)",d:"Dec 6, 2025",iso:"2025-12-06",type:"Classics"},
-  144:{t:"Dave Dameshek + Lemmy Kilmister (Carolla Classics)",d:"Dec 5, 2025",iso:"2025-12-05",type:"Classics"},
-  145:{t:"Billy Gardell on His 173LB Weight Loss Journey + Trump\u2019s  New Immigration Freeze",d:"Dec 4, 2025",iso:"2025-12-04",type:"Daily"},
-  146:{t:"Joe Pistone, AKA Donnie Brasco, Was Almost Murdered by the Mafia",d:"Dec 3, 2025",iso:"2025-12-03",type:"Daily"},
-  147:{t:"Chris Hansen on Epstein, Predators & Woke Culture + Mamdani Appoints Transgender Rabbi",d:"Dec 2, 2025",iso:"2025-12-02",type:"Daily"},
-  148:{t:"Fran Tarkenton Spills Shocking NFL Secrets: From Beating Peyton Manning\u2019s Record to Firing His Own Coach!",d:"Dec 1, 2025",iso:"2025-12-01",type:"Daily"},
-  149:{t:"Adam Scott + Brittany Snow (Carolla Classics)",d:"Nov 30, 2025",iso:"2025-11-30",type:"Classics"},
-  150:{t:"Marc Maron + Nick Offerman (Carolla Classics)",d:"Nov 29, 2025",iso:"2025-11-29",type:"Classics"},
-  151:{t:"Alec Baldwin + Megan Daum (Carolla Classics)",d:"Nov 28, 2025",iso:"2025-11-28",type:"Classics"},
-  152:{t:"Adam Carolla's Secret Cranberry Recipe",d:"Nov 27, 2025",iso:"2025-11-27",type:"Daily"},
-  153:{t:"Happy Thanksgiving from Adam Carolla",d:"Nov 27, 2025",iso:"2025-11-27",type:"Daily"},
-  154:{t:"Wade Phillips on NFL Going Corporate, Old-School Training & Great Houston Oilers",d:"Nov 26, 2025",iso:"2025-11-26",type:"Daily"},
-  155:{t:"Sam Tripoli and Adam Carolla vs. Grievance Culture + Marjorie Taylor Greene Drama Heats Up",d:"Nov 25, 2025",iso:"2025-11-25",type:"Daily"},
-  156:{t:"Richard Rawlings\u2019 Road to Success + Tim Hardaway on Why Kids Today Are Softer",d:"Nov 24, 2025",iso:"2025-11-24",type:"Daily"},
-  157:{t:"Tito Ortiz + Max Mutchnick (Carolla Classics)",d:"Nov 23, 2025",iso:"2025-11-23",type:"Classics"},
-  158:{t:"Bret Easton Ellis + Stacey Dash (Carolla Classics)",d:"Nov 22, 2025",iso:"2025-11-22",type:"Classics"},
-  159:{t:"Tyler Labine + Haley Joel Osment (Carolla Classics)",d:"Nov 21, 2025",iso:"2025-11-21",type:"Classics"},
-  160:{t:"Scott Galloway on Why Young Men Are Struggling Now More than Ever",d:"Nov 20, 2025",iso:"2025-11-20",type:"Daily"},
-  161:{t:"Mariana van Zeller Exposes Cartels, Smugglers, Traffickers & Billion-Dollar Scammers",d:"Nov 19, 2025",iso:"2025-11-19",type:"Daily"},
-  162:{t:"Jiaoying Summers Talks Kevin Costner, Government Checks & One Night Stands",d:"Nov 18, 2025",iso:"2025-11-18",type:"Daily"},
-  163:{t:"Adam \u201cPacman\u201d Jones on the One Thing You Can\u2019t Coach + Another Newsom Scandal!",d:"Nov 17, 2025",iso:"2025-11-17",type:"Daily"},
-  164:{t:"Katie Couric + Bob Saget (Carolla Classics)",d:"Nov 16, 2025",iso:"2025-11-16",type:"Classics"},
-  165:{t:"Joel McHale + The Sklar Brothers (Carolla Classics)",d:"Nov 15, 2025",iso:"2025-11-15",type:"Classics"},
-  166:{t:"Louie Anderson + Judd Apatow (Carolla Classics)",d:"Nov 14, 2025",iso:"2025-11-14",type:"Classics"},
-  167:{t:"David Arquette on How He Purchased the Rights to Bozo the Clown",d:"Nov 13, 2025",iso:"2025-11-13",type:"Daily"},
-  168:{t:"Richard Marx on Rockstar Life, Groupies & Trying Not to Be a Douchebag",d:"Nov 12, 2025",iso:"2025-11-12",type:"Daily"},
-  169:{t:"Jay Mohr Sings \u2018Big Girls Don\u2019t Cry\u2019 As Joe Pesci + Does a Killer Bon Jovi + Bill Maher\u2019s Politically Incorrect Confessions",d:"Nov 11, 2025",iso:"2025-11-11",type:"Daily"},
-  170:{t:"Rick Caruso Joins Adam Carolla to Talk LA\u2019s Future, Politics & Accountability",d:"Nov 10, 2025",iso:"2025-11-10",type:"Daily"},
-  171:{t:"Robert Wagner + Jillian Barberie (Carolla Classics)",d:"Nov 9, 2025",iso:"2025-11-09",type:"Classics"},
-  172:{t:"Jesse Ventura + Jo Koy (Carolla Classics)",d:"Nov 8, 2025",iso:"2025-11-08",type:"Classics"},
-  173:{t:"Kelley James + David Wild (Carolla Classics)",d:"Nov 7, 2025",iso:"2025-11-07",type:"Classics"},
-  174:{t:"Sperm Bank Horror Story with Adam Ray",d:"Nov 6, 2025",iso:"2025-11-06",type:"Daily"},
-  175:{t:"Bjorn Lomborg on Why the Climate Panic Is Over + Why Bill Gates Has Changed His Tune",d:"Nov 5, 2025",iso:"2025-11-05",type:"Daily"},
-  176:{t:"Trauma Bonding with Ryan Sickler + What It\u2019s Like to be a Warmup Comic with Gary Cannon",d:"Nov 4, 2025",iso:"2025-11-04",type:"Daily"},
-  177:{t:"Cheryl Hines Talks Defending Husband RFK Jr. + Palisades Firefighters Ordered to Leave Burn Site",d:"Nov 3, 2025",iso:"2025-11-03",type:"Daily"},
-  178:{t:"Arsenio Hall + Pia Zadora (Carolla Classics)",d:"Nov 2, 2025",iso:"2025-11-02",type:"Classics"},
-  179:{t:"Richard Grieco + Warren Littlefield (Carolla Classics)",d:"Nov 1, 2025",iso:"2025-11-01",type:"Classics"},
-  180:{t:"Matt Besser + Kevin Nealon (Carolla Classics)",d:"Oct 31, 2025",iso:"2025-10-31",type:"Classics"},
-  181:{t:"\u2018Entitled Housewife\u2019 Becky Robinson Talks Living with Tim Dillon & Going Viral + AOC & Riley Gaines Beef Gets Heated",d:"Oct 30, 2025",iso:"2025-10-30",type:"Daily"},
-  182:{t:"Conspiracies and Coverups with Patrick Byrne + Mike Murphy Talks Chaos in California",d:"Oct 29, 2025",iso:"2025-10-29",type:"Daily"},
-  183:{t:"Eric Trump on the Death of Wokeness and Media Lies",d:"Oct 28, 2025",iso:"2025-10-28",type:"Daily"},
-  184:{t:"Charlie Sheen Talks Sex, Drugs & Partying + Kamala Teases Presidential Run",d:"Oct 27, 2025",iso:"2025-10-27",type:"Daily"},
-  185:{t:"Seth Green + Ben Shapiro (Carolla Classics)",d:"Oct 26, 2025",iso:"2025-10-26",type:"Classics"},
-  186:{t:"Henry Bushkin + Mark Ellis (Carolla Classics)",d:"Oct 25, 2025",iso:"2025-10-25",type:"Classics"},
-  187:{t:"Dean Devlin + Phillip Keene (Carolla Classics)",d:"Oct 24, 2025",iso:"2025-10-24",type:"Classics"},
-  188:{t:"Sal Vulcano on Impractical Jokers\u2019 CRAZIEST Punishments",d:"Oct 23, 2025",iso:"2025-10-23",type:"Daily"},
-  189:{t:"Dirty Deeds with Greg Fitzsimmons + Kevin Federline Talks Britney Spears Controversy",d:"Oct 22, 2025",iso:"2025-10-22",type:"Daily"},
-  190:{t:"Monique Marvez CAN\u2019T STAND Sissy Men + Drag Racer Brittany Force on What It\u2019s Like Going over 300MPH",d:"Oct 21, 2025",iso:"2025-10-21",type:"Daily"},
-  191:{t:"Erica Rhodes Hates Activities for Couples + Adam Reacts to the \u201cNO KINGS\u201d Protests",d:"Oct 20, 2025",iso:"2025-10-20",type:"Daily"},
-  192:{t:"Anna David + Listener Calls (Carolla Classics)",d:"Oct 19, 2025",iso:"2025-10-19",type:"Classics"},
-  193:{t:"Adam Carolla + You (Carolla Classics)",d:"Oct 18, 2025",iso:"2025-10-18",type:"Classics"},
-  194:{t:"Kevin Nealon + Super Dave Osborne (Carolla Classics)",d:"Oct 17, 2025",iso:"2025-10-17",type:"Classics"},
-  195:{t:"Senator John Kennedy EXPOSES the TRUTH behind the Government Shutdown",d:"Oct 16, 2025",iso:"2025-10-16",type:"Daily"},
-  196:{t:"Andrew Klavan on Just How Woke Hollywood Really Is + Huge \u201cNo Kings\u201d Protests Incoming",d:"Oct 15, 2025",iso:"2025-10-15",type:"Daily"},
-  197:{t:"Best of Beat It Out Part 2 with Jay Mohr and Dustin Ybarra",d:"Oct 14, 2025",iso:"2025-10-14",type:"Daily"},
-  198:{t:"Adam Carolla LIVE in NYC with Kat Timpf, Dr. Drew & Kyle Dunnigan",d:"Oct 13, 2025",iso:"2025-10-13",type:"Daily"},
-  199:{t:"Dennis Prager +  JB Smoove (Carolla Classics)",d:"Oct 12, 2025",iso:"2025-10-12",type:"Classics"},
-  200:{t:"Christopher Titus + Bobby Collins (Carolla Classics)",d:"Oct 11, 2025",iso:"2025-10-11",type:"Classics"},
+  61:{t:"Patrick Dempsey + Tucker Carlson (Carolla Classics)",d:"Mar 1, 2026",iso:"2026-03-01",type:"Classics",aid:"1000752286242",aslug:"patrick-dempsey-tucker-carlson-carolla-classics"},
+  62:{t:"Jimmy Kimmel + Haley Joel Osment (Carolla Classics)",d:"Feb 28, 2026",iso:"2026-02-28",type:"Classics",aid:"1000752066551",aslug:"jimmy-kimmel-haley-joel-osment-carolla-classics"},
+  63:{t:"Mark-Paul Gosselaar + Dr. Drew (Carolla Classics)",d:"Feb 27, 2026",iso:"2026-02-27",type:"Classics",aid:"1000751882999",aslug:"mark-paul-gosselaar-dr-drew-carolla-classics"},
+  64:{t:"Jon Taffer on Running The Troubadour and How Less Drinking Affects Restaurants",d:"Feb 26, 2026",iso:"2026-02-26",type:"Daily",aid:"1000751714775",aslug:"jon-taffer-on-running-the-troubadour-and-how"},
+  65:{t:"Earthquake\u2019s Wild Military Stories, How Steve Harvey Made Him + His New Bill Burr Sitcom",d:"Feb 25, 2026",iso:"2026-02-25",type:"Daily",aid:"1000751350273",aslug:"earthquakes-wild-military-stories-how-steve-harvey"},
+  66:{t:"Bruce Bruce: The Wild Path From Frito-Lay Worker to Comedy Legend",d:"Feb 24, 2026",iso:"2026-02-24",type:"Daily",aid:"1000751158603",aslug:"bruce-bruce-the-wild-path-from-frito-lay-worker-to"},
+  67:{t:"Republican Steve Hilton on His Rapid Rise in California Governor Race",d:"Feb 23, 2026",iso:"2026-02-23",type:"Daily",aid:"1000750978885",aslug:"republican-steve-hilton-on-his-rapid-rise-in-california"},
+  68:{t:"Ron Funches + Gary Sinise (Carolla Classics)",d:"Feb 22, 2026",iso:"2026-02-22",type:"Classics",aid:"1000750857318",aslug:"ron-funches-gary-sinise-carolla-classics"},
+  69:{t:"Alex Winter + Brian Regan (Carolla Classics)",d:"Feb 21, 2026",iso:"2026-02-21",type:"Classics",aid:"1000750770932",aslug:"alex-winter-brian-regan-carolla-classics"},
+  70:{t:"Brian Posehn + Ben Bailey (Carolla Classics)",d:"Feb 20, 2026",iso:"2026-02-20",type:"Classics",aid:"1000750705291",aslug:"brian-posehn-ben-bailey-carolla-classics"},
+  71:{t:"Jackie Fabulous On Going Viral & Wanting to Date a Male Comic",d:"Feb 19, 2026",iso:"2026-02-19",type:"Daily",aid:"1000750452671",aslug:"jackie-fabulous-on-going-viral-wanting-to-date-a-male-comic"},
+  72:{t:"Rob Riggle On Why Young Men Need Hardship",d:"Feb 18, 2026",iso:"2026-02-18",type:"Daily",aid:"1000750281968",aslug:"rob-riggle-on-why-young-men-need-hardship"},
+  73:{t:"Crazy White People and The New Political Shift In Hollywood",d:"Feb 17, 2026",iso:"2026-02-17",type:"Daily",aid:"1000750098960",aslug:"crazy-white-people-and-the-new-political-shift-in-hollywood"},
+  74:{t:"Are Mel Brooks Movies Actually Funny? w/ Adam Yenser + Obama Criticizes LA\u2019s Homeless Crisis",d:"Feb 16, 2026",iso:"2026-02-16",type:"Daily",aid:"1000749937963",aslug:"are-mel-brooks-movies-actually-funny-w-adam-yenser"},
+  75:{t:"Larry Miller + Hanson (Carolla Classics)",d:"Feb 15, 2026",iso:"2026-02-15",type:"Classics",aid:"1000749808664",aslug:"larry-miller-hanson-carolla-classics"},
+  76:{t:"Alex Arato + Troy Duffy (Carolla Classics)",d:"Feb 14, 2026",iso:"2026-02-14",type:"Classics",aid:"1000749713307",aslug:"alex-arato-troy-duffy-carolla-classics"},
+  77:{t:"Dana Gould + Will Sasso (Carolla Classics)",d:"Feb 13, 2026",iso:"2026-02-13",type:"Classics",aid:"1000749562405",aslug:"dana-gould-will-sasso-carolla-classics"},
+  78:{t:"Big Ed Spills 90 Day Fianc\u00e9 Secrets + From Viral Videos to Feature Films \u2014 Kinnane Bros Tell All",d:"Feb 12, 2026",iso:"2026-02-12",type:"Daily",aid:"1000749399146",aslug:"big-ed-spills-90-day-fianc%C3%A9-secrets-from-viral-videos"},
+  79:{t:"Jamie Lissow Talks Homosexuals In Saunas, Rob Schneider &  Springsteen\u2019s Political Turn",d:"Feb 11, 2026",iso:"2026-02-11",type:"Daily",aid:"1000749206576",aslug:"jamie-lissow-talks-homosexuals-in-saunas-rob-schneider"},
+  80:{t:"Benny Johnson EXPOSES California\u2019s Homeless Fraud",d:"Feb 10, 2026",iso:"2026-02-10",type:"Daily",aid:"1000749042232",aslug:"benny-johnson-exposes-californias-homeless-fraud"},
+  81:{t:"Adam Carolla & Michael Yo LIVE: Florida\u2019s Iguanas & Growing Up Poor",d:"Feb 9, 2026",iso:"2026-02-09",type:"Daily",aid:"1000748872206",aslug:"adam-carolla-michael-yo-live-floridas-iguanas-growing"},
+  82:{t:"Greg Fitzsimmons + Kevin Sorbo (Carolla Classics)",d:"Feb 8, 2026",iso:"2026-02-08",type:"Classics",aid:"1000748741341",aslug:"greg-fitzsimmons-kevin-sorbo-carolla-classics"},
+  83:{t:"Bill Simmons + Shaun White (Carolla Classics)",d:"Feb 7, 2026",iso:"2026-02-07",type:"Classics",aid:"1000748672912",aslug:"bill-simmons-shaun-white-carolla-classics"},
+  84:{t:"John Popper + Gina and Bryan (Carolla Classics)",d:"Feb 6, 2026",iso:"2026-02-06",type:"Classics",aid:"1000748590085",aslug:"john-popper-gina-and-bryan-carolla-classics"},
+  85:{t:"Adam Carolla & Megyn Kelly UNFILTERED: Fox News, Rumors & Media Chaos",d:"Feb 5, 2026",iso:"2026-02-05",type:"Daily",aid:"1000748336323",aslug:"adam-carolla-megyn-kelly-unfiltered-fox-news-rumors"},
+  86:{t:"Andrew Gruel: How Tough Coaches Made Strong Men and Eating on a Budget",d:"Feb 4, 2026",iso:"2026-02-04",type:"Daily",aid:"1000747987856",aslug:"andrew-gruel-how-tough-coaches-made-strong-men-and"},
+  87:{t:"Stolen Land, ICE Out + More Idiotic Political Statements at Grammys",d:"Feb 3, 2026",iso:"2026-02-03",type:"Daily",aid:"1000747829411",aslug:"stolen-land-ice-out-more-idiotic-political-statements"},
+  88:{t:"Scaramucci Talks Catholic School + Dunnigan Does His Best Impressions Yet",d:"Feb 2, 2026",iso:"2026-02-02",type:"Daily",aid:"1000747668388",aslug:"scaramucci-talks-catholic-school-dunnigan-does-his"},
+  89:{t:"John Popper + Matt Walsh (Carolla Classics)",d:"Feb 1, 2026",iso:"2026-02-01",type:"Classics",aid:"1000747545377",aslug:"john-popper-matt-walsh-carolla-classics"},
+  90:{t:"Dinesh D\u2019Souza + Ed Asner (Carolla Classics)",d:"Jan 31, 2026",iso:"2026-01-31",type:"Classics",aid:"1000747509043",aslug:"dinesh-dsouza-ed-asner-carolla-classics"},
+  91:{t:"Greg Fitzsimmons + David Wild (Carolla Classics)",d:"Jan 30, 2026",iso:"2026-01-30",type:"Classics",aid:"1000747507973",aslug:"greg-fitzsimmons-david-wild-carolla-classics"},
+  92:{t:"Charlotte McKinney Explains Why Hot Girls Get Cheated On",d:"Jan 29, 2026",iso:"2026-01-29",type:"Daily",aid:"1000747148220",aslug:"charlotte-mckinney-explains-why-hot-girls-get-cheated-on"},
+  93:{t:"Sam Tripoli on Free Speech, Culture Wars & Why He Gets Called a \u201cFascist\u201d",d:"Jan 28, 2026",iso:"2026-01-28",type:"Daily",aid:"1000746980961",aslug:"sam-tripoli-on-free-speech-culture-wars-why-he-gets"},
+  94:{t:"Neal McDonough Talks Discipline, Marriage, and Working with the Rock",d:"Jan 27, 2026",iso:"2026-01-27",type:"Daily",aid:"1000746820601",aslug:"neal-mcdonough-talks-discipline-marriage-and-working"},
+  95:{t:"Megyn Kelly Tells Protestors \u201cGet Hot and Get Effed\u201d",d:"Jan 26, 2026",iso:"2026-01-26",type:"Daily",aid:"1000746662057",aslug:"megyn-kelly-tells-protestors-get-hot-and-get-effed"},
+  96:{t:"Rob Riggle + Gabriel Iglesias (Carolla Classics)",d:"Jan 25, 2026",iso:"2026-01-25",type:"Classics",aid:"1000746542918",aslug:"rob-riggle-gabriel-iglesias-carolla-classics"},
+  97:{t:"Jo Koy + Alison and Bryan (Carolla Classics)",d:"Jan 24, 2026",iso:"2026-01-24",type:"Classics",aid:"1000746498295",aslug:"jo-koy-alison-and-bryan-carolla-classics"},
+  98:{t:"Jim Norton + Frank Stallone (Carolla Classics)",d:"Jan 23, 2026",iso:"2026-01-23",type:"Classics",aid:"1000746497628",aslug:"jim-norton-frank-stallone-carolla-classics"},
+  99:{t:"Greg Fitzsimmons Explains Hollywood Math, Bad Podcasts & Comedy Myths",d:"Jan 22, 2026",iso:"2026-01-22",type:"Daily",aid:"1000746178144",aslug:"greg-fitzsimmons-explains-hollywood-math-bad-podcasts"},
+  100:{t:"Deontay Wilder On Fighting With No Rules & Possibly Joining UFC",d:"Jan 21, 2026",iso:"2026-01-21",type:"Daily",aid:"1000746010671",aslug:"deontay-wilder-on-fighting-with-no-rules-possibly"},
+  101:{t:"Gavin Newsom\u2019s Thoughts on GOD and Trans Kids + Should Don Lemon Be Arrested?",d:"Jan 20, 2026",iso:"2026-01-20",type:"Daily",aid:"1000745862342",aslug:"gavin-newsoms-thoughts-on-god-and-trans-kids-should"},
+  102:{t:"Dana Gould and Adam Pitch a Perfect 80\u2019s Movie",d:"Jan 19, 2026",iso:"2026-01-19",type:"Daily",aid:"1000745712202",aslug:"dana-gould-and-adam-pitch-a-perfect-80s-movie"},
+  103:{t:"Dave Dameshek (Carolla Classics)",d:"Jan 18, 2026",iso:"2026-01-18",type:"Classics",aid:"1000745602040",aslug:"dave-dameshek-carolla-classics"},
+  104:{t:"Dr. Drew + Teresa and Bryan (Carolla Classics)",d:"Jan 17, 2026",iso:"2026-01-17",type:"Classics",aid:"1000745524607",aslug:"dr-drew-teresa-and-bryan-carolla-classics"},
+  105:{t:"Mike Tollin + Ben Browning (Carolla Classics)",d:"Jan 16, 2026",iso:"2026-01-16",type:"Classics",aid:"1000745481218",aslug:"mike-tollin-ben-browning-carolla-classics"},
+  106:{t:"Sean Duffy Destroys Gavin Newsom\u2019s Illegal Truckers",d:"Jan 15, 2026",iso:"2026-01-15",type:"Daily",aid:"1000745260352",aslug:"sean-duffy-destroys-gavin-newsoms-illegal-truckers"},
+  107:{t:"Erica Rhodes Explains the Difference Between Stalkers and Fans for Men vs Women",d:"Jan 14, 2026",iso:"2026-01-14",type:"Daily",aid:"1000745106491",aslug:"erica-rhodes-explains-the-difference-between-stalkers"},
+  108:{t:"Eddie Bravo Talks Global Governments and How Producers Ruined the Man Show",d:"Jan 13, 2026",iso:"2026-01-13",type:"Daily",aid:"1000744956840",aslug:"eddie-bravo-talks-global-governments-and-how"},
+  109:{t:"Paul Chowdhry Talks Assimilation, Racing and Funny Groin Injuries",d:"Jan 12, 2026",iso:"2026-01-12",type:"Daily",aid:"1000744775724",aslug:"paul-chowdhry-talks-assimilation-racing-and-funny"},
+  110:{t:"Orny Adams + Phil Rosenthal (Carolla Classics)",d:"Jan 11, 2026",iso:"2026-01-11",type:"Classics",aid:"1000744660753",aslug:"orny-adams-phil-rosenthal-carolla-classics"},
+  111:{t:"Brian Whitman + Tim Allen (Carolla Classics)",d:"Jan 10, 2026",iso:"2026-01-10",type:"Classics",aid:"1000744572774",aslug:"brian-whitman-tim-allen-carolla-classics"},
+  112:{t:"Dan Soder + Gilbert Gottfried (Carolla Classics)",d:"Jan 9, 2026",iso:"2026-01-09",type:"Classics",aid:"1000744480808",aslug:"dan-soder-gilbert-gottfried-carolla-classics"},
+  113:{t:"Why Louis C.K. Is Cancel-Proof",d:"Jan 8, 2026",iso:"2026-01-08",type:"Daily",aid:"1000744257621",aslug:"why-louis-c-k-is-cancel-proof"},
+  114:{t:"C. Thomas Howell Learned to Smoke Cigs on Ride to E.T. Audition",d:"Jan 7, 2026",iso:"2026-01-07",type:"Daily",aid:"1000744094580",aslug:"c-thomas-howell-learned-to-smoke-cigs-on-ride-to-e-t-audition"},
+  115:{t:"Mark Geragos talks Nick Reiner, Bill Cosby, Derek Chauvin and More",d:"Jan 6, 2026",iso:"2026-01-06",type:"Daily",aid:"1000743939660",aslug:"mark-geragos-talks-nick-reiner-bill-cosby-derek-chauvin"},
+  116:{t:"The Warmth of Collectivism and the Collapse of Society: Welcome to 2026!",d:"Jan 5, 2026",iso:"2026-01-05",type:"Daily",aid:"1000743784796",aslug:"the-warmth-of-collectivism-and-the-collapse"},
+  117:{t:"Dennis Miller + Jo Koy (Carolla Classics)",d:"Jan 4, 2026",iso:"2026-01-04",type:"Classics",aid:"1000743675203",aslug:"dennis-miller-jo-koy-carolla-classics"},
+  118:{t:"John Salley + Alison and Bryan (Carolla Classics)",d:"Jan 3, 2026",iso:"2026-01-03",type:"Classics",aid:"1000743626530",aslug:"john-salley-alison-and-bryan-carolla-classics"},
+  119:{t:"Paul Scheer + Alison and Bryan (Carolla Classics)",d:"Jan 2, 2026",iso:"2026-01-02",type:"Classics",aid:"1000743624908",aslug:"paul-scheer-alison-and-bryan-carolla-classics"},
+  120:{t:"Best of ACS: Ja Rule and Adam Ray, Drake Bell, Kevin Federline, and Bill O'Reilly",d:"Dec 30, 2025",iso:"2025-12-30",type:"Daily",aid:"1000743157815",aslug:"best-of-acs-ja-rule-and-adam-ray-drake-bell"},
+  121:{t:"Best of ACS: Paul Walter Hauser, Steve Guttenberg, Lou Diamond Phillips, and Dana Gould",d:"Dec 29, 2025",iso:"2025-12-29",type:"Daily",aid:"1000743023421",aslug:"best-of-acs-paul-walter-hauser-steve-guttenberg-lou"},
+  122:{t:"Jill Zarin + Alison and Bryan (Carolla Classics)",d:"Dec 28, 2025",iso:"2025-12-28",type:"Classics",aid:"1000742924117",aslug:"jill-zarin-alison-and-bryan-carolla-classics"},
+  123:{t:"Carlos Mencia + Winter Ave Zoli (Carolla Classics)",d:"Dec 27, 2025",iso:"2025-12-27",type:"Classics",aid:"1000742893487",aslug:"carlos-mencia-winter-ave-zoli-carolla-classics"},
+  124:{t:"Bai Ling + Zane Buzby (Carolla Classics)",d:"Dec 26, 2025",iso:"2025-12-26",type:"Classics",aid:"1000742892847",aslug:"bai-ling-zane-buzby-carolla-classics"},
+  125:{t:"Santa Talks Christmas, Marriage Drama with Mrs. Claus, and Elf on the Shelf!",d:"Dec 24, 2025",iso:"2025-12-24",type:"Daily",aid:"1000742562799",aslug:"santa-talks-christmas-marriage-drama-with-mrs-claus"},
+  126:{t:"The 2025 Adam Carolla Show Ace Awards: Rants, Special Guests, Interviews and More!",d:"Dec 23, 2025",iso:"2025-12-23",type:"Daily",aid:"1000742427726",aslug:"the-2025-adam-carolla-show-ace-awards-rants-special"},
+  127:{t:"LIVE from the Sagebrush Cantina with Brad Williams and Rick Sittig",d:"Dec 22, 2025",iso:"2025-12-22",type:"Live",aid:"1000742281413",aslug:"live-from-the-sagebrush-cantina-with-brad-williams"},
+  128:{t:"Dana Gould + Vinnie Tortorich (Carolla Classics)",d:"Dec 21, 2025",iso:"2025-12-21",type:"Classics",aid:"1000742176683",aslug:"dana-gould-vinnie-tortorich-carolla-classics"},
+  129:{t:"Rob Reiner (Carolla Classics)",d:"Dec 20, 2025",iso:"2025-12-20",type:"Classics",aid:"1000742140007",aslug:"rob-reiner-carolla-classics"},
+  130:{t:"Greg Fitzsimmons + Rich Eisen (Carolla Classics)",d:"Dec 19, 2025",iso:"2025-12-19",type:"Classics",aid:"1000742134536",aslug:"greg-fitzsimmons-rich-eisen-carolla-classics"},
+  131:{t:"Dr. Phil on Bad Parenting, ICE Raids, and Our Failed Education System",d:"Dec 18, 2025",iso:"2025-12-18",type:"Daily",aid:"1000741805187",aslug:"dr-phil-on-bad-parenting-ice-raids-and-our-failed"},
+  132:{t:"Jim Norton & Adam Carolla on the Wild Evolution of the Trans Debate",d:"Dec 17, 2025",iso:"2025-12-17",type:"Daily",aid:"1000741648524",aslug:"jim-norton-adam-carolla-on-the-wild-evolution-of"},
+  133:{t:"Ricky Nelson\u2019s Legacy, Elvis, and Growing up with George Harrison with The Nelson Twins",d:"Dec 16, 2025",iso:"2025-12-16",type:"Daily",aid:"1000741493920",aslug:"ricky-nelsons-legacy-elvis-and-growing-up-with"},
+  134:{t:"Greg Fitzsimmons talks Big Hogs, Quitting Sobriety, and Conjugal Visits",d:"Dec 15, 2025",iso:"2025-12-15",type:"Daily",aid:"1000741322398",aslug:"greg-fitzsimmons-talks-big-hogs-quitting-sobriety-and"},
+  135:{t:"John Mulaney + Rich Eisen (Carolla Classics)",d:"Dec 14, 2025",iso:"2025-12-14",type:"Classics",aid:"1000741200363",aslug:"john-mulaney-rich-eisen-carolla-classics"},
+  136:{t:"French Stewart + Jo Koy (Carolla Classics)",d:"Dec 13, 2025",iso:"2025-12-13",type:"Classics",aid:"1000741138464",aslug:"french-stewart-jo-koy-carolla-classics"},
+  137:{t:"Dr. Drew + Elliot Gould (Carolla Classics)",d:"Dec 12, 2025",iso:"2025-12-12",type:"Classics",aid:"1000741135711",aslug:"dr-drew-elliot-gould-carolla-classics"},
+  138:{t:"Kelsey Grammer on Trump, Newsom Running for President, and Malibu Fire Updates",d:"Dec 11, 2025",iso:"2025-12-11",type:"Daily",aid:"1000740811724",aslug:"kelsey-grammer-on-trump-newsom-running-for-president"},
+  139:{t:"Sean Stone Talks RFK Jr. Documentary and Oliver Stone\u2019s Tough Love",d:"Dec 10, 2025",iso:"2025-12-10",type:"Daily",aid:"1000740593259",aslug:"sean-stone-talks-rfk-jr-documentary-and-oliver-stones"},
+  140:{t:"Made Up Movies with Adam Yenser and Macey Isaacs",d:"Dec 9, 2025",iso:"2025-12-09",type:"Daily",aid:"1000740370877",aslug:"made-up-movies-with-adam-yenser-and-macey-isaacs"},
+  141:{t:"Debbie Matenopoulos on Why She Was Fired from The View & Newsom\u2019s Cringy Moment",d:"Dec 8, 2025",iso:"2025-12-08",type:"Daily",aid:"1000740184475",aslug:"debbie-matenopoulos-on-why-she-was-fired-from-the"},
+  142:{t:"Marc Maron + Alison and Bryan (Carolla Classics)",d:"Dec 7, 2025",iso:"2025-12-07",type:"Classics",aid:"1000740054523",aslug:"marc-maron-alison-and-bryan-carolla-classics"},
+  143:{t:"Lisa Lampanelli + Illeana Douglas (Carolla Classics)",d:"Dec 6, 2025",iso:"2025-12-06",type:"Classics",aid:"1000739964003",aslug:"lisa-lampanelli-illeana-douglas-carolla-classics"},
+  144:{t:"Dave Dameshek + Lemmy Kilmister (Carolla Classics)",d:"Dec 5, 2025",iso:"2025-12-05",type:"Classics",aid:"1000739965387",aslug:"dave-dameshek-lemmy-kilmister-carolla-classics"},
+  145:{t:"Billy Gardell on His 173LB Weight Loss Journey + Trump\u2019s  New Immigration Freeze",d:"Dec 4, 2025",iso:"2025-12-04",type:"Daily",aid:"1000739643989",aslug:"billy-gardell-on-his-173lb-weight-loss-journey-trumps"},
+  146:{t:"Joe Pistone, AKA Donnie Brasco, Was Almost Murdered by the Mafia",d:"Dec 3, 2025",iso:"2025-12-03",type:"Daily",aid:"1000739465767",aslug:"joe-pistone-aka-donnie-brasco-was-almost-murdered-by"},
+  147:{t:"Chris Hansen on Epstein, Predators & Woke Culture + Mamdani Appoints Transgender Rabbi",d:"Dec 2, 2025",iso:"2025-12-02",type:"Daily",aid:"1000739251573",aslug:"chris-hansen-on-epstein-predators-woke-culture-mamdani"},
+  148:{t:"Fran Tarkenton Spills Shocking NFL Secrets: From Beating Peyton Manning\u2019s Record to Firing His Own Coach!",d:"Dec 1, 2025",iso:"2025-12-01",type:"Daily",aid:"1000739092787",aslug:"fran-tarkenton-spills-shocking-nfl-secrets-from-beating"},
+  149:{t:"Adam Scott + Brittany Snow (Carolla Classics)",d:"Nov 30, 2025",iso:"2025-11-30",type:"Classics",aid:"1000738957043",aslug:"adam-scott-brittany-snow-carolla-classics"},
+  150:{t:"Marc Maron + Nick Offerman (Carolla Classics)",d:"Nov 29, 2025",iso:"2025-11-29",type:"Classics",aid:"1000738919330",aslug:"marc-maron-nick-offerman-carolla-classics"},
+  151:{t:"Alec Baldwin + Megan Daum (Carolla Classics)",d:"Nov 28, 2025",iso:"2025-11-28",type:"Classics",aid:"1000738918991",aslug:"alec-baldwin-megan-daum-carolla-classics"},
+  152:{t:"Adam Carolla's Secret Cranberry Recipe",d:"Nov 27, 2025",iso:"2025-11-27",type:"Daily",aid:"1000738643271",aslug:"adam-carollas-secret-cranberry-recipe"},
+  153:{t:"Happy Thanksgiving from Adam Carolla",d:"Nov 27, 2025",iso:"2025-11-27",type:"Daily",aid:"1000738643299",aslug:"happy-thanksgiving-from-adam-carolla"},
+  154:{t:"Wade Phillips on NFL Going Corporate, Old-School Training & Great Houston Oilers",d:"Nov 26, 2025",iso:"2025-11-26",type:"Daily",aid:"1000738488017",aslug:"wade-phillips-on-nfl-going-corporate-old-school-training"},
+  155:{t:"Sam Tripoli and Adam Carolla vs. Grievance Culture + Marjorie Taylor Greene Drama Heats Up",d:"Nov 25, 2025",iso:"2025-11-25",type:"Daily",aid:"1000738293435",aslug:"sam-tripoli-and-adam-carolla-vs-grievance-culture"},
+  156:{t:"Richard Rawlings\u2019 Road to Success + Tim Hardaway on Why Kids Today Are Softer",d:"Nov 24, 2025",iso:"2025-11-24",type:"Daily",aid:"1000738086657",aslug:"richard-rawlings-road-to-success-tim-hardaway-on-why"},
+  157:{t:"Tito Ortiz + Max Mutchnick (Carolla Classics)",d:"Nov 23, 2025",iso:"2025-11-23",type:"Classics",aid:"1000737970318",aslug:"tito-ortiz-max-mutchnick-carolla-classics"},
+  158:{t:"Bret Easton Ellis + Stacey Dash (Carolla Classics)",d:"Nov 22, 2025",iso:"2025-11-22",type:"Classics",aid:"1000737888056",aslug:"bret-easton-ellis-stacey-dash-carolla-classics"},
+  159:{t:"Tyler Labine + Haley Joel Osment (Carolla Classics)",d:"Nov 21, 2025",iso:"2025-11-21",type:"Classics",aid:"1000737874362",aslug:"tyler-labine-haley-joel-osment-carolla-classics"},
+  160:{t:"Scott Galloway on Why Young Men Are Struggling Now More than Ever",d:"Nov 20, 2025",iso:"2025-11-20",type:"Daily",aid:"1000737561154",aslug:"scott-galloway-on-why-young-men-are-struggling-now"},
+  161:{t:"Mariana van Zeller Exposes Cartels, Smugglers, Traffickers & Billion-Dollar Scammers",d:"Nov 19, 2025",iso:"2025-11-19",type:"Daily",aid:"1000737377358",aslug:"mariana-van-zeller-exposes-cartels-smugglers-traffickers"},
+  162:{t:"Jiaoying Summers Talks Kevin Costner, Government Checks & One Night Stands",d:"Nov 18, 2025",iso:"2025-11-18",type:"Daily",aid:"1000737211496",aslug:"jiaoying-summers-talks-kevin-costner-government-checks"},
+  163:{t:"Adam \u201cPacman\u201d Jones on the One Thing You Can\u2019t Coach + Another Newsom Scandal!",d:"Nov 17, 2025",iso:"2025-11-17",type:"Daily",aid:"1000737056612",aslug:"adam-pacman-jones-on-the-one-thing-you-cant-coach"},
+  164:{t:"Katie Couric + Bob Saget (Carolla Classics)",d:"Nov 16, 2025",iso:"2025-11-16",type:"Classics",aid:"1000736934264",aslug:"katie-couric-bob-saget-carolla-classics"},
+  165:{t:"Joel McHale + The Sklar Brothers (Carolla Classics)",d:"Nov 15, 2025",iso:"2025-11-15",type:"Classics",aid:"1000736846849",aslug:"joel-mchale-the-sklar-brothers-carolla-classics"},
+  166:{t:"Louie Anderson + Judd Apatow (Carolla Classics)",d:"Nov 14, 2025",iso:"2025-11-14",type:"Classics",aid:"1000736755896",aslug:"louie-anderson-judd-apatow-carolla-classics"},
+  167:{t:"David Arquette on How He Purchased the Rights to Bozo the Clown",d:"Nov 13, 2025",iso:"2025-11-13",type:"Daily",aid:"1000736558527",aslug:"david-arquette-on-how-he-purchased-the-rights-to-bozo"},
+  168:{t:"Richard Marx on Rockstar Life, Groupies & Trying Not to Be a Douchebag",d:"Nov 12, 2025",iso:"2025-11-12",type:"Daily",aid:"1000736391011",aslug:"richard-marx-on-rockstar-life-groupies-trying-not-to"},
+  169:{t:"Jay Mohr Sings \u2018Big Girls Don\u2019t Cry\u2019 As Joe Pesci + Does a Killer Bon Jovi + Bill Maher\u2019s Politically Incorrect Confessions",d:"Nov 11, 2025",iso:"2025-11-11",type:"Daily",aid:"1000736232803",aslug:"jay-mohr-sings-big-girls-dont-cry-as-joe-pesci-does"},
+  170:{t:"Rick Caruso Joins Adam Carolla to Talk LA\u2019s Future, Politics & Accountability",d:"Nov 10, 2025",iso:"2025-11-10",type:"Daily",aid:"1000736064465",aslug:"rick-caruso-joins-adam-carolla-to-talk-las-future-politics"},
+  171:{t:"Robert Wagner + Jillian Barberie (Carolla Classics)",d:"Nov 9, 2025",iso:"2025-11-09",type:"Classics",aid:"1000735937620",aslug:"robert-wagner-jillian-barberie-carolla-classics"},
+  172:{t:"Jesse Ventura + Jo Koy (Carolla Classics)",d:"Nov 8, 2025",iso:"2025-11-08",type:"Classics",aid:"1000735837622",aslug:"jesse-ventura-jo-koy-carolla-classics"},
+  173:{t:"Kelley James + David Wild (Carolla Classics)",d:"Nov 7, 2025",iso:"2025-11-07",type:"Classics",aid:"1000735779306",aslug:"kelley-james-david-wild-carolla-classics"},
+  174:{t:"Sperm Bank Horror Story with Adam Ray",d:"Nov 6, 2025",iso:"2025-11-06",type:"Daily",aid:"1000735526651",aslug:"sperm-bank-horror-story-with-adam-ray"},
+  175:{t:"Bjorn Lomborg on Why the Climate Panic Is Over + Why Bill Gates Has Changed His Tune",d:"Nov 5, 2025",iso:"2025-11-05",type:"Daily",aid:"1000735356212",aslug:"bjorn-lomborg-on-why-the-climate-panic-is-over-why"},
+  176:{t:"Trauma Bonding with Ryan Sickler + What It\u2019s Like to be a Warmup Comic with Gary Cannon",d:"Nov 4, 2025",iso:"2025-11-04",type:"Daily",aid:"1000735176594",aslug:"trauma-bonding-with-ryan-sickler-what-its-like-to-be"},
+  177:{t:"Cheryl Hines Talks Defending Husband RFK Jr. + Palisades Firefighters Ordered to Leave Burn Site",d:"Nov 3, 2025",iso:"2025-11-03",type:"Daily",aid:"1000735004876",aslug:"cheryl-hines-talks-defending-husband-rfk-jr-palisades"},
+  178:{t:"Arsenio Hall + Pia Zadora (Carolla Classics)",d:"Nov 2, 2025",iso:"2025-11-02",type:"Classics",aid:"1000734774499",aslug:"arsenio-hall-pia-zadora-carolla-classics"},
+  179:{t:"Richard Grieco + Warren Littlefield (Carolla Classics)",d:"Nov 1, 2025",iso:"2025-11-01",type:"Classics",aid:"1000734617605",aslug:"richard-grieco-warren-littlefield-carolla-classics"},
+  180:{t:"Matt Besser + Kevin Nealon (Carolla Classics)",d:"Oct 31, 2025",iso:"2025-10-31",type:"Classics",aid:"1000734616778",aslug:"matt-besser-kevin-nealon-carolla-classics"},
+  181:{t:"\u2018Entitled Housewife\u2019 Becky Robinson Talks Living with Tim Dillon & Going Viral + AOC & Riley Gaines Beef Gets Heated",d:"Oct 30, 2025",iso:"2025-10-30",type:"Daily",aid:"1000734175527",aslug:"entitled-housewife-becky-robinson-talks-living-with"},
+  182:{t:"Conspiracies and Coverups with Patrick Byrne + Mike Murphy Talks Chaos in California",d:"Oct 29, 2025",iso:"2025-10-29",type:"Daily",aid:"1000734007581",aslug:"conspiracies-and-coverups-with-patrick-byrne-mike"},
+  183:{t:"Eric Trump on the Death of Wokeness and Media Lies",d:"Oct 28, 2025",iso:"2025-10-28",type:"Daily",aid:"1000733831551",aslug:"eric-trump-on-the-death-of-wokeness-and-media-lies"},
+  184:{t:"Charlie Sheen Talks Sex, Drugs & Partying + Kamala Teases Presidential Run",d:"Oct 27, 2025",iso:"2025-10-27",type:"Daily",aid:"1000733655855",aslug:"charlie-sheen-talks-sex-drugs-partying-kamala-teases"},
+  185:{t:"Seth Green + Ben Shapiro (Carolla Classics)",d:"Oct 26, 2025",iso:"2025-10-26",type:"Classics",aid:"1000733528390",aslug:"seth-green-ben-shapiro-carolla-classics"},
+  186:{t:"Henry Bushkin + Mark Ellis (Carolla Classics)",d:"Oct 25, 2025",iso:"2025-10-25",type:"Classics",aid:"1000733494118",aslug:"henry-bushkin-mark-ellis-carolla-classics"},
+  187:{t:"Dean Devlin + Phillip Keene (Carolla Classics)",d:"Oct 24, 2025",iso:"2025-10-24",type:"Classics",aid:"1000733492967",aslug:"dean-devlin-phillip-keene-carolla-classics"},
+  188:{t:"Sal Vulcano on Impractical Jokers\u2019 CRAZIEST Punishments",d:"Oct 23, 2025",iso:"2025-10-23",type:"Daily",aid:"1000733100479",aslug:"sal-vulcano-on-impractical-jokers-craziest-punishments"},
+  189:{t:"Dirty Deeds with Greg Fitzsimmons + Kevin Federline Talks Britney Spears Controversy",d:"Oct 22, 2025",iso:"2025-10-22",type:"Daily",aid:"1000732938292",aslug:"dirty-deeds-with-greg-fitzsimmons-kevin-federline"},
+  190:{t:"Monique Marvez CAN\u2019T STAND Sissy Men + Drag Racer Brittany Force on What It\u2019s Like Going over 300MPH",d:"Oct 21, 2025",iso:"2025-10-21",type:"Daily",aid:"1000732773792",aslug:"monique-marvez-cant-stand-sissy-men-drag-racer-brittany"},
+  191:{t:"Erica Rhodes Hates Activities for Couples + Adam Reacts to the \u201cNO KINGS\u201d Protests",d:"Oct 20, 2025",iso:"2025-10-20",type:"Daily",aid:"1000732614295",aslug:"erica-rhodes-hates-activities-for-couples-adam-reacts"},
+  192:{t:"Anna David + Listener Calls (Carolla Classics)",d:"Oct 19, 2025",iso:"2025-10-19",type:"Classics",aid:"1000732497168",aslug:"anna-david-listener-calls-carolla-classics"},
+  193:{t:"Adam Carolla + You (Carolla Classics)",d:"Oct 18, 2025",iso:"2025-10-18",type:"Classics",aid:"1000732405172",aslug:"adam-carolla-you-carolla-classics"},
+  194:{t:"Kevin Nealon + Super Dave Osborne (Carolla Classics)",d:"Oct 17, 2025",iso:"2025-10-17",type:"Classics",aid:"1000732379762",aslug:"kevin-nealon-super-dave-osborne-carolla-classics"},
+  195:{t:"Senator John Kennedy EXPOSES the TRUTH behind the Government Shutdown",d:"Oct 16, 2025",iso:"2025-10-16",type:"Daily",aid:"1000732103392",aslug:"senator-john-kennedy-exposes-the-truth-behind"},
+  196:{t:"Andrew Klavan on Just How Woke Hollywood Really Is + Huge \u201cNo Kings\u201d Protests Incoming",d:"Oct 15, 2025",iso:"2025-10-15",type:"Daily",aid:"1000731947460",aslug:"andrew-klavan-on-just-how-woke-hollywood-really-is"},
+  197:{t:"Best of Beat It Out Part 2 with Jay Mohr and Dustin Ybarra",d:"Oct 14, 2025",iso:"2025-10-14",type:"Daily",aid:"1000731757967",aslug:"best-of-beat-it-out-part-2-with-jay-mohr-and-dustin-ybarra"},
+  198:{t:"Adam Carolla LIVE in NYC with Kat Timpf, Dr. Drew & Kyle Dunnigan",d:"Oct 13, 2025",iso:"2025-10-13",type:"Daily",aid:"1000731545799",aslug:"adam-carolla-live-in-nyc-with-kat-timpf-dr-drew-kyle-dunnigan"},
+  199:{t:"Dennis Prager +  JB Smoove (Carolla Classics)",d:"Oct 12, 2025",iso:"2025-10-12",type:"Classics",aid:"1000731422066",aslug:"dennis-prager-jb-smoove-carolla-classics"},
+  200:{t:"Christopher Titus + Bobby Collins (Carolla Classics)",d:"Oct 11, 2025",iso:"2025-10-11",type:"Classics",aid:"1000731361856",aslug:"christopher-titus-bobby-collins-carolla-classics"},
   201:{t:"Jane Goodall + Ray Oldhafer (Carolla Classics)",d:"Oct 10, 2025",iso:"2025-10-10",type:"Classics"},
   202:{t:"Neil deGrasse Tyson and Adam Carolla Explore the Cosmos and Talk Construction",d:"Oct 9, 2025",iso:"2025-10-09",type:"Daily"},
   203:{t:"Exposing Small Town Corruption with Chef Andrew Gruel",d:"Oct 8, 2025",iso:"2025-10-08",type:"Daily"},
@@ -7156,7 +7151,18 @@ function tokenize(text) {
 }
 
 function buildCatalogBlock(latestUserMessage) {
-  const allIds = Object.keys(EPISODE_DATA).map(Number).sort((a, b) => a - b);
+  // Filter rule: every recommendation must have a working Listen link.
+  //  - Episodes WITH an Apple ID always work via Apple Podcasts (recent ~200).
+  //  - Episodes WITHOUT an Apple ID fall back to AdamCarolla.com — which works
+  //    for Daily/Vintage/Live but 404s for Classics. So we exclude Classics
+  //    that lack an Apple ID, since they have no working landing page.
+  const allIds = Object.keys(EPISODE_DATA)
+    .map(Number)
+    .filter(id => {
+      const ep = EPISODE_DATA[id];
+      return ep.aid || ep.type !== 'Classics';
+    })
+    .sort((a, b) => a - b);
   const recentIds = allIds.slice(0, RECENT_WINDOW);
   const recentSet = new Set(recentIds);
 
@@ -7182,8 +7188,8 @@ function buildCatalogBlock(latestUserMessage) {
   const lines = [
     "",
     "## CATALOG WINDOW",
-    `You have access to a curated window from a 6,080-episode archive (Feb 2009 – present).`,
-    `Below are the ${recentIds.length} most recent episodes (current rotation), followed by ${matchedIds.length} archive episodes whose titles match the user's latest message.`,
+    `You have access to ${allIds.length} episodes spanning Feb 2009 to present.`,
+    `Below are the ${recentIds.length} most recent (current rotation), followed by ${matchedIds.length} additional episodes whose titles match the user's latest message.`,
     "",
     "### RECENT ROTATION (most recent first)"
   ];
@@ -7212,7 +7218,7 @@ function buildCatalogBlock(latestUserMessage) {
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.1.2';
+const APP_VERSION = '1.1.5';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
@@ -7371,6 +7377,29 @@ function addMessage(role, text) {
       epRefs.forEach(num => {
         const ep = EPISODE_DATA[num];
         if (!ep) return;
+        // Listen-link rules:
+        //   1. Default to BOTH AdamCarolla.com AND Apple when both are valid.
+        //   2. If no Apple link, AdamCarolla.com only.
+        //   3. ONLY show Apple if it's a Classics episode (AdamCarolla.com 404s on Classics).
+        const hasApple = ep.aid && ep.aslug;
+        const isClassics = ep.type === 'Classics';
+        const appleUrl = hasApple
+          ? `https://podcasts.apple.com/us/podcast/${ep.aslug}/id306390087?i=${ep.aid}`
+          : null;
+        const carollaUrl = adamCarollaUrl(ep.t);
+
+        let linksHtml = '';
+        if (isClassics && hasApple) {
+          // Rule 3: Classics 404 on AdamCarolla.com — Apple only
+          linksHtml = `<a class="ep-listen ep-listen-apple" href="${appleUrl}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts →</a>`;
+        } else {
+          // Rules 1 & 2: AdamCarolla.com always, plus Apple when available
+          linksHtml = `<a class="ep-listen ep-listen-carolla" href="${carollaUrl}" target="_blank" rel="noopener noreferrer">Listen on AdamCarolla.com →</a>`;
+          if (hasApple) {
+            linksHtml += `<a class="ep-listen ep-listen-apple" href="${appleUrl}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts →</a>`;
+          }
+        }
+
         const card = document.createElement('div');
         card.className = 'ep-card';
         card.innerHTML = `
@@ -7378,9 +7407,7 @@ function addMessage(role, text) {
           <div class="ep-info">
             <div class="ep-title">${ep.t}</div>
             <div class="ep-tags"><span class="ep-tag">${ep.d}</span></div>
-            <div class="ep-listen-group">
-              <a class="ep-listen ep-listen-carolla" href="${adamCarollaUrl(ep.t)}" target="_blank" rel="noopener noreferrer">Listen on AdamCarolla.com →</a>
-            </div>
+            <div class="ep-listen-group">${linksHtml}</div>
           </div>`;
         cardsDiv.appendChild(card);
       });
