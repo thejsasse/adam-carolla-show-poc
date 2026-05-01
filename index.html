@@ -29,19 +29,11 @@
 
   html, body { height: 100%; overflow: hidden; max-width: 100%; }
   * { max-width: 100%; }
+  html { background-color: var(--bg); }
 
   body {
     font-family: 'Barlow', sans-serif;
-    background-color: var(--bg);
-    /* Adam Carolla brand portrait — separate file alongside the HTML.
-       Anchored right-center, sized contain so he never crops.
-       Hidden below 1100px viewport (see media query at end of stylesheet).
-       Upload carolla_bg.jpg to the same directory as this HTML. */
-    background-image: url(./carolla_bg.jpg);
-    background-position: right center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-attachment: fixed;
+    background: transparent;
     color: var(--text);
     display: flex;
     flex-direction: column;
@@ -49,11 +41,26 @@
     height: 100dvh;
   }
 
+  /* Adam Carolla brand portrait — dedicated fixed-position div so it doesn't
+     fight body's flex layout or stacking context. Sits behind all content via
+     negative z-index. Body is transparent, so html's bg-color shows through
+     where the image doesn't reach. Upload carolla_bg.jpg to the same directory. */
+  .brand-bg {
+    position: fixed;
+    inset: 0;
+    background-image: url(./carolla_bg.jpg);
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: -1;
+    pointer-events: none;
+  }
+
   /* Drop the brand portrait below 1100px — at narrower widths the chat column
      starts crowding the image and it just looks messy. Mobile and narrow desktops
      get the clean dark theme. */
   @media (max-width: 1100px) {
-    body { background-image: none; }
+    .brand-bg { display: none; }
   }
 
   /* HEADER */
@@ -806,6 +813,8 @@
 </head>
 <body>
 
+<div class="brand-bg" aria-hidden="true"></div>
+
 <!-- API KEY GATE -->
 <div id="keyGate">
   <div class="key-card">
@@ -980,6 +989,12 @@ The catalog window provided to you on each turn is the source of episode-specifi
 // Without per-episode Apple IDs, all cards link to the show page on Apple Podcasts;
 // when a deal closes with PodcastOne, the deep-link mapping becomes a deal term.
 
+// FUTURE: at production, listen targets need to support Apple, Spotify, and the
+// brand's own destination (configurable per-show). For now we route everything
+// through AdamCarolla.com because (a) it works for any episode in the catalog
+// via the slug pattern, and (b) it keeps traffic on Adam's own site. Apple
+// support requires per-episode IDs (not in the current RSS dump) — pull from
+// itunes.apple.com/lookup?id=306390087&entity=podcastEpisode when revisited.
 const SHOW_URL = "https://podcasts.apple.com/us/podcast/adam-carolla-show/id306390087";
 const ADAMCAROLLA_BASE = "https://adamcarolla.com/podcast-episode/";
 
@@ -7178,7 +7193,7 @@ function buildCatalogBlock(latestUserMessage) {
 
 // ─── BUILD VERSION ────────────────────────────────────────────────────────────
 // Increment by 0.1 each build. Wrap rule: 1.0.9 → 1.1.0, 1.9.9 → 2.0.0
-const APP_VERSION = '1.0.8';
+const APP_VERSION = '1.0.9';
 
 // ─── API PROXY ────────────────────────────────────────────────────────────────
 // Cloudflare Worker that forwards requests to Anthropic with the server-side
@@ -7346,7 +7361,6 @@ function addMessage(role, text) {
             <div class="ep-tags"><span class="ep-tag">${ep.d}</span></div>
             <div class="ep-listen-group">
               <a class="ep-listen ep-listen-carolla" href="${adamCarollaUrl(ep.t)}" target="_blank" rel="noopener noreferrer">Listen on AdamCarolla.com →</a>
-              <a class="ep-listen ep-listen-apple" href="${SHOW_URL}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts →</a>
             </div>
           </div>`;
         cardsDiv.appendChild(card);
