@@ -1,5 +1,7 @@
     <title>Adam Carolla Show</title>
       <title>Adam Carolla Show</title>
+      <title>Mary Lynn Rajskub + Harland Williams (Carolla Classics)</title>
+      <pubDate>Sun, 03 May 2026 07:00:00 -0000</pubDate>
       <title>Deaf Frat Guy + Lemmy Kilmister (Carolla Classics)</title>
       <pubDate>Sat, 02 May 2026 07:00:00 -0000</pubDate>
       <title>Crispin Glover + Stephen Mitchell (Carolla Classics)</title>
